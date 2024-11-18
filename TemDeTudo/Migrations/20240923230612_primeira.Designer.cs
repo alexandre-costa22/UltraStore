@@ -4,13 +4,13 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using TemDeTudo.Data;
+using UltraStore.Data;
 
 #nullable disable
 
-namespace TemDeTudo.Migrations
+namespace UltraStore.Migrations
 {
-    [DbContext(typeof(TemDeTudoContext))]
+    [DbContext(typeof(UltraStoreContext))]
     [Migration("20240923230612_primeira")]
     partial class primeira
     {
@@ -23,7 +23,7 @@ namespace TemDeTudo.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("TemDeTudo.Models.Product", b =>
+            modelBuilder.Entity("UltraStore.Models.Product", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()

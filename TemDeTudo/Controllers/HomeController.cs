@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using TemDeTudo.Models;
+using UltraStore.Models;
 
-namespace TemDeTudo.Controllers
+namespace UltraStore.Controllers
 {
     public class HomeController : Controller
     {

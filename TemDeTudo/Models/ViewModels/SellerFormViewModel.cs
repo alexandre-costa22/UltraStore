@@ -3,6 +3,6 @@
     public class SellerFormViewModel
     {
         public Seller Seller { get; set; }
-        public List<Client> Departments { get; set; }
+        public List<Client> Client { get; set; }
     }
 }

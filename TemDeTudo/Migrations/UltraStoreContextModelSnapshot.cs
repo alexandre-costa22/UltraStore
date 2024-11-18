@@ -4,14 +4,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using TemDeTudo.Data;
+using UltraStore.Data;
 
 #nullable disable
 
-namespace TemDeTudo.Migrations
+namespace UltraStore.Migrations
 {
-    [DbContext(typeof(TemDeTudoContext))]
-    partial class TemDeTudoContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(UltraStoreContext))]
+    partial class UltraStoreContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -22,7 +22,7 @@ namespace TemDeTudo.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("TemDeTudo.Models.Department", b =>
+            modelBuilder.Entity("UltraStore.Models.Department", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -39,7 +39,7 @@ namespace TemDeTudo.Migrations
                     b.ToTable("Department");
                 });
 
-            modelBuilder.Entity("TemDeTudo.Models.Product", b =>
+            modelBuilder.Entity("UltraStore.Models.Product", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -60,7 +60,7 @@ namespace TemDeTudo.Migrations
                     b.ToTable("Product");
                 });
 
-            modelBuilder.Entity("TemDeTudo.Models.SalesRecord", b =>
+            modelBuilder.Entity("UltraStore.Models.SalesRecord", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -87,7 +87,7 @@ namespace TemDeTudo.Migrations
                     b.ToTable("SalesRecord");
                 });
 
-            modelBuilder.Entity("TemDeTudo.Models.Seller", b =>
+            modelBuilder.Entity("UltraStore.Models.Seller", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -119,9 +119,9 @@ namespace TemDeTudo.Migrations
                     b.ToTable("Seller");
                 });
 
-            modelBuilder.Entity("TemDeTudo.Models.SalesRecord", b =>
+            modelBuilder.Entity("UltraStore.Models.SalesRecord", b =>
                 {
-                    b.HasOne("TemDeTudo.Models.Seller", "Seller")
+                    b.HasOne("UltraStore.Models.Seller", "Seller")
                         .WithMany("Sales")
                         .HasForeignKey("SellerId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -130,9 +130,9 @@ namespace TemDeTudo.Migrations
                     b.Navigation("Seller");
                 });
 
-            modelBuilder.Entity("TemDeTudo.Models.Seller", b =>
+            modelBuilder.Entity("UltraStore.Models.Seller", b =>
                 {
-                    b.HasOne("TemDeTudo.Models.Department", "Department")
+                    b.HasOne("UltraStore.Models.Department", "Department")
                         .WithMany("Sellers")
                         .HasForeignKey("DepartmentId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -141,12 +141,12 @@ namespace TemDeTudo.Migrations
                     b.Navigation("Department");
                 });
 
-            modelBuilder.Entity("TemDeTudo.Models.Department", b =>
+            modelBuilder.Entity("UltraStore.Models.Department", b =>
                 {
                     b.Navigation("Sellers");
                 });
 
-            modelBuilder.Entity("TemDeTudo.Models.Seller", b =>
+            modelBuilder.Entity("UltraStore.Models.Seller", b =>
                 {
                     b.Navigation("Sales");
                 });

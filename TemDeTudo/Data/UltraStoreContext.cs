@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TemDeTudo.Models;
+using UltraStore.Models;
 
-namespace TemDeTudo.Data
+namespace UltraStore.Data
 {
-    public class TemDeTudoContext : DbContext
+    public class UltraStoreContext : DbContext
     {
-        public TemDeTudoContext(DbContextOptions<TemDeTudoContext> options)
+        public UltraStoreContext(DbContextOptions<UltraStoreContext> options)
             : base(options)
         {
         }

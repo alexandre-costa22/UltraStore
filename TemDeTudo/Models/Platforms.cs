@@ -1,7 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using UltraStore.Models;
 
 namespace UltraStore.Models
-
 {
     public class Platforms
     {

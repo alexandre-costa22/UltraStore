@@ -8,7 +8,7 @@
     }
   },
   "profiles": {
-    "TemDeTudo": {
+    "UltraStore": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

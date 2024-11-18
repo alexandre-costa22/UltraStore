@@ -1,16 +1,16 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using TemDeTudo.Data;
-using TemDeTudo.Models;
+using UltraStore.Data;
+using UltraStore.Models;
 
-namespace TemDeTudo.Controllers
+namespace UltraStore.Controllers
 {
-    public class SalesRecordsController : Controller
+    public class FranchiseController : Controller
     {
-        private readonly TemDeTudoContext _context;
+        private readonly UltraStoreContext _context;
 
-        public SalesRecordsController(TemDeTudoContext context)
+        public FranchiseController(UltraStoreContext context)
         {
             _context = context;
         }
@@ -18,8 +18,8 @@ namespace TemDeTudo.Controllers
         // GET: SalesRecords
         public async Task<IActionResult> Index()
         {
-            var temDeTudoContext = _context.SalesRecord.Include(s => s.Seller);
-            return View(await temDeTudoContext.ToListAsync());
+            var UltraStoreContext = _context.SalesRecord.Include(s => s.Seller);
+            return View(await UltraStoreContext.ToListAsync());
         }
 
         // GET: SalesRecords/Details/5
@@ -144,7 +144,7 @@ namespace TemDeTudo.Controllers
         {
             if (_context.SalesRecord == null)
             {
-                return Problem("Entity set 'TemDeTudoContext.SalesRecord'  is null.");
+                return Problem("Entity set 'UltraStoreContext.SalesRecord'  is null.");
             }
             var salesRecord = await _context.SalesRecord.FindAsync(id);
             if (salesRecord != null)

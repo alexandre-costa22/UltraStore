@@ -12,7 +12,7 @@ namespace UltraStore.Models
         [Display(Name = "Foundation Date")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
-        public DateTime BirthDate { get; set; }
+        public DateTime FoundationDate { get; set; }
         public List<Developer> Developers { get; set; }
             = new List<Developer>();
     }

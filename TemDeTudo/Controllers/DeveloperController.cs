@@ -1,15 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using TemDeTudo.Data;
-using TemDeTudo.Models;
+using UltraStore.Data;
+using UltraStore.Models;
 
-namespace TemDeTudo.Controllers
+namespace UltraStore.Controllers
 {
-    public class ProductsController : Controller
+    public class DeveloperController : Controller
     {
-        private readonly TemDeTudoContext _context;
+        private readonly UltraStoreContext _context;
 
-        public ProductsController(TemDeTudoContext context)
+        public DeveloperController(UltraStoreContext context)
         {
             _context = context;
         }
@@ -19,7 +19,7 @@ namespace TemDeTudo.Controllers
         {
             return _context.Product != null ?
                         View(await _context.Product.ToListAsync()) :
-                        Problem("Entity set 'TemDeTudoContext.Product'  is null.");
+                        Problem("Entity set 'UltraStoreContext.Product'  is null.");
         }
 
         // GET: Products/Details/5
@@ -138,7 +138,7 @@ namespace TemDeTudo.Controllers
         {
             if (_context.Product == null)
             {
-                return Problem("Entity set 'TemDeTudoContext.Product'  is null.");
+                return Problem("Entity set 'UltraStoreContext.Product'  is null.");
             }
             var product = await _context.Product.FindAsync(id);
             if (product != null)

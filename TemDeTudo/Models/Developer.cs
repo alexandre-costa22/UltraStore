@@ -1,22 +1,21 @@
-﻿namespace UltraStore.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace UltraStore.Models
 
 {
     public class Developer
     {
         public int Id { get; set; }
-        public DateTime Date { get; set; }
-        public Decimal Price { get; set; }
-        public SaleStatus Status { get; set; }
-        public int SellerId { get; set; }
-        public Seller Seller { get; set; }
+        [Required]
+        [Display(Name = "Nome da Developer")]
+        [StringLength(30, ErrorMessage = "O nome deve ter no máximo 50 characteres")]
+        public string Name { get; set; }
+        [Display(Name = "Foundation Date")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        public DateTime FoundationDate { get; set; }
+        public List<Game> DevelopedGames { get; set; }
+            = new List<Game>();
 
     }
-
-    public enum SaleStatus : int
-    {
-        PENDING = 0,
-        BILLED = 1,
-        CANCELED = 2
-    }
-
 }

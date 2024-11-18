@@ -10,9 +10,9 @@ namespace UltraStore.Controllers
     {
         private readonly UltraStoreContext _context;
 
-        public SellersController(UltraStoreContext context)
+        public SellersController(UltraStoreContext dbContext)
         {
-            _context = context;
+            _context = dbContext;
         }
 
         public IActionResult Index()
@@ -167,6 +167,6 @@ namespace UltraStore.Controllers
 
             return View();
         }
-
+        A
     }
 }

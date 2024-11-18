@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace TemDeTudo.Migrations
+namespace UltraStore.Migrations
 {
     public partial class primeira : Migration
     {

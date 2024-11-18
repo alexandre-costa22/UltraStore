@@ -1,15 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using TemDeTudo.Data;
-using TemDeTudo.Models;
+using UltraStore.Data;
+using UltraStore.Models;
 
-namespace TemDeTudo.Controllers
+namespace UltraStore.Controllers
 {
-    public class DepartmentsController : Controller
+    public class ClientController : Controller
     {
-        private readonly TemDeTudoContext _context;
+        private readonly UltraStoreContext _context;
 
-        public DepartmentsController(TemDeTudoContext context)
+        public ClientController(UltraStoreContext context)
         {
             _context = context;
         }
@@ -19,7 +19,7 @@ namespace TemDeTudo.Controllers
         {
             return _context.Department != null ?
                         View(await _context.Department.ToListAsync()) :
-                        Problem("Entity set 'TemDeTudoContext.Department'  is null.");
+                        Problem("Entity set 'UltraStoreContext.Department'  is null.");
         }
 
         // GET: Departments/Details/5
@@ -138,7 +138,7 @@ namespace TemDeTudo.Controllers
         {
             if (_context.Department == null)
             {
-                return Problem("Entity set 'TemDeTudoContext.Department'  is null.");
+                return Problem("Entity set 'UltraStoreContext.Department'  is null.");
             }
             var department = await _context.Department.FindAsync(id);
             if (department != null)

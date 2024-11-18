@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TemDeTudo.Data;
+using UltraStore.Data;
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddDbContext<TemDeTudoContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("TemDeTudoContext") ?? throw new InvalidOperationException("Connection string 'TemDeTudoContext' not found.")));
+builder.Services.AddDbContext<UltraStoreContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("UltraStoreContext") ?? throw new InvalidOperationException("Connection string 'UltraStoreContext' not found.")));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
