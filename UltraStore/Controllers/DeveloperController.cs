@@ -5,87 +5,87 @@ using UltraStore.Models;
 
 namespace UltraStore.Controllers
 {
-    public class ClientController : Controller
+    public class DeveloperController : Controller
     {
         private readonly UltraStoreContext _context;
 
-        public ClientController(UltraStoreContext context)
+        public DeveloperController(UltraStoreContext context)
         {
             _context = context;
         }
 
-        // GET: Departments
+        // GET: Products
         public async Task<IActionResult> Index()
         {
-            return _context.Department != null ?
-                        View(await _context.Department.ToListAsync()) :
-                        Problem("Entity set 'UltraStoreContext.Department'  is null.");
+            return _context.Developer != null ?
+                        View(await _context.Developer.ToListAsync()) :
+                        Problem("Entity set 'UltraStoreContext.Developer'  is null.");
         }
 
-        // GET: Departments/Details/5
+        // GET: Products/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Department == null)
+            if (id == null || _context.Developer == null)
             {
                 return NotFound();
             }
 
-            var department = await _context.Department
+            var product = await _context.Developer
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (department == null)
+            if (product == null)
             {
                 return NotFound();
             }
 
-            return View(department);
+            return View(product);
         }
 
-        // GET: Departments/Create
+        // GET: Products/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Departments/Create
+        // POST: Products/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name")] Client department)
+        public async Task<IActionResult> Create([Bind("Id,Name,Description")] Developer product)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(department);
+                _context.Add(product);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(department);
+            return View(product);
         }
 
-        // GET: Departments/Edit/5
+        // GET: Products/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Department == null)
+            if (id == null || _context.Developer == null)
             {
                 return NotFound();
             }
 
-            var department = await _context.Department.FindAsync(id);
-            if (department == null)
+            var product = await _context.Developer.FindAsync(id);
+            if (product == null)
             {
                 return NotFound();
             }
-            return View(department);
+            return View(product);
         }
 
-        // POST: Departments/Edit/5
+        // POST: Products/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] Client department)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description")] Developer product)
         {
-            if (id != department.Id)
+            if (id != product.Id)
             {
                 return NotFound();
             }
@@ -94,12 +94,12 @@ namespace UltraStore.Controllers
             {
                 try
                 {
-                    _context.Update(department);
+                    _context.Update(product);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!DepartmentExists(department.Id))
+                    if (!ProductExists(product.Id))
                     {
                         return NotFound();
                     }
@@ -110,49 +110,49 @@ namespace UltraStore.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(department);
+            return View(product);
         }
 
-        // GET: Departments/Delete/5
+        // GET: Products/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Department == null)
+            if (id == null || _context.Developer == null)
             {
                 return NotFound();
             }
 
-            var department = await _context.Department
+            var product = await _context.Developer
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (department == null)
+            if (product == null)
             {
                 return NotFound();
             }
 
-            return View(department);
+            return View(product);
         }
 
-        // POST: Departments/Delete/5
+        // POST: Products/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Department == null)
+            if (_context.Developer == null)
             {
-                return Problem("Entity set 'UltraStoreContext.Department'  is null.");
+                return Problem("Entity set 'UltraStoreContext.Product'  is null.");
             }
-            var department = await _context.Department.FindAsync(id);
-            if (department != null)
+            var product = await _context.Developer.FindAsync(id);
+            if (product != null)
             {
-                _context.Department.Remove(department);
+                _context.Developer.Remove(product);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool DepartmentExists(int id)
+        private bool ProductExists(int id)
         {
-            return (_context.Department?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Developer?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

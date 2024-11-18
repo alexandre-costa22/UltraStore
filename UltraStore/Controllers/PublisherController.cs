@@ -6,11 +6,11 @@ using UltraStore.Models.ViewModels;
 
 namespace UltraStore.Controllers
 {
-    public class SellersController : Controller
+    public class PublisherController : Controller
     {
         private readonly UltraStoreContext _context;
 
-        public SellersController(UltraStoreContext context)
+        public PublisherController(UltraStoreContext context)
         {
             _context = context;
         }
@@ -18,30 +18,28 @@ namespace UltraStore.Controllers
         public IActionResult Index()
         {
             //List<Seller> sellers = _context.Seller.ToList();
-            var sellers = _context.Seller.Include("Department").ToList();
+            var publisher = _context.Publisher.Include("Name").ToList();
 
             //Filtra os vendedores que ganham menos de 10k
-            var trainees = sellers.Where(s => s.Salary <= 10000);
+            //var trainees = sellers.Where(s => s.Salary <= 10000);
 
             //Filtra a lista e ordena em ordem CRESCENTE
             //por nome e depois por salario
-            var SellersAscNameSalary =
-                sellers.OrderBy(s => s.Name)
-                .ThenBy(s => s.Salary);
-
-            return View(SellersAscNameSalary);
+            var PublisherNames =
+                publisher.OrderBy(s => s.Name);
+            return View(PublisherNames);
         }
 
-        public IActionResult Create()
-        {
-            //Instanciar um SellerFormViewModel
-            //Essa instância vai ter 2 propriedades
-            //um vendedor e uma lista de departmamentos
-            var viewModel = new SellerFormViewModel();
-            //carregando os departamentos do banco
-            viewModel.Departments = _context.Department.ToList();
-            return View(viewModel);
-        }
+        //public IActionResult Create()
+        //{
+        //    //Instanciar um SellerFormViewModel
+        //    //Essa instância vai ter 2 propriedades
+        //    //um vendedor e uma lista de departmamentos
+        //    var viewModel = new PublisherController();
+        //    //carregando os departamentos do banco
+        //    viewModel.Pu = _context.Publisher.ToList();
+        //    return View(viewModel);
+        //}
 
         [HttpPost]
         public IActionResult Create(Seller seller)
@@ -127,12 +125,12 @@ namespace UltraStore.Controllers
             }
 
             //Cria uma lista de departamentos
-            List<Client> departments = _context.Department.ToList();
+            List<Publisher> departments = _context.Publisher.ToList();
 
             //Cria uma instância do viewmodel
             SellerFormViewModel viewModel = new SellerFormViewModel();
             viewModel.Seller = seller;
-            viewModel.Departments = departments;
+            //viewModel.Departments = departments;
 
             return View(viewModel);
         }
@@ -147,26 +145,26 @@ namespace UltraStore.Controllers
             return RedirectToAction("Index");
         }
 
-        public IActionResult Report()
-        {
-            //Popular a lista de objetos vendedores,
-            //trazendo as informações
-            //do departamento de cada vendedor
-            //List<Seller> sellers
-            var sellers = _context.Seller.Include("Department").ToList();
+//        public IActionResult Report()
+//        {
+//            //Popular a lista de objetos vendedores,
+//            //trazendo as informações
+//            //do departamento de cada vendedor
+//            //List<Seller> sellers
+//            var sellers = _context.Seller.Include("Department").ToList();
 
-''            ViewData["TotalFolhaPagamento"] = sellers.Sum(s => s.Salary);
+//''            ViewData["TotalFolhaPagamento"] = sellers.Sum(s => s.Salary);
 
-            ViewData["Maior"] = sellers.Max(s => s.Salary);
+//            ViewData["Maior"] = sellers.Max(s => s.Salary);
 
-            ViewData["Menor"] = sellers.Min(s => s.Salary);
+//            ViewData["Menor"] = sellers.Min(s => s.Salary);
 
-            ViewData["Media"] = sellers.Average(s => s.Salary);
+//            ViewData["Media"] = sellers.Average(s => s.Salary);
 
-            ViewData["Ricos"] = sellers.Count(s => s.Salary >= 30000);
+//            ViewData["Ricos"] = sellers.Count(s => s.Salary >= 30000);
 
-            return View();
-        }
+//            return View();
+//        }
 
     }
 }
