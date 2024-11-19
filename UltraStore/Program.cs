@@ -2,7 +2,11 @@
 using UltraStore.Data;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<UltraStoreContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("UltraStoreContext") ?? throw new InvalidOperationException("Connection string 'UltraStoreContext' not found.")));
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("UltraStoreContext"),
+        sqlOptions => sqlOptions.EnableRetryOnFailure()
+    ));
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

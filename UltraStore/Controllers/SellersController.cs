@@ -17,14 +17,12 @@ namespace UltraStore.Controllers
 
         public IActionResult Index()
         {
-            //List<Seller> sellers = _context.Seller.ToList();
-            var sellers = _context.Seller.Include("Department").ToList();
+            // Obtém todos os vendedores e ordena pelo nome
+            var sellers = _context.Seller
+                .OrderBy(s => s.Name)
+                .ToList();
 
-            //Filtra a lista e ordena em ordem CRESCENTE
-            //por nome e depois por salario
-            var SellersAscName =
-                sellers.OrderBy(s => s.Name);
-            return View(SellersAscName);
+            return View(sellers);
         }
 
         public IActionResult Create()

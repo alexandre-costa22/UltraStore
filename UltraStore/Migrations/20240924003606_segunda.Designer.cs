@@ -89,7 +89,7 @@ namespace UltraStore.Migrations
                     b.ToTable("SalesRecord");
                 });
 
-            modelBuilder.Entity("UltraStore.Models.Seller", b =>
+            modelBuilder.Entity("UltraStore.Models.Sellers", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
