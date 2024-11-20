@@ -2,10 +2,7 @@
 using UltraStore.Data;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<UltraStoreContext>(options =>
-    options.UseSqlServer(
-        builder.Configuration.GetConnectionString("UltraStoreContext"),
-        sqlOptions => sqlOptions.EnableRetryOnFailure()
-    ));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("UltraStoreContext")));
 
 
 // Add services to the container.
