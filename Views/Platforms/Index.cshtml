@@ -1,0 +1,34 @@
+﻿@model IEnumerable<UltraStore.Models.Platforms>
+
+@{
+    ViewData["Title"] = "Platforms";
+}
+
+<h1>Platforms</h1>
+
+<p>
+    <a href="@Url.Action("Create")" class="btn btn-primary">Create New Platform</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Manufacturers</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var platform in Model)
+        {
+            <tr>
+                <td>@platform.Id</td>
+                <td>@platform.Name</td>
+                <td>@platform.Manufacturer</td>
+                <td>
+                    <a href="@Url.Action("Edit", new { id = platform.Id })" class="btn btn-warning">Edit</a>
+                    <a href="@Url.Action("Delete", new { id = platform.Id })" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
