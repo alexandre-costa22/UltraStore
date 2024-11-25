@@ -1,4 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
+using System.ComponentModel.DataAnnotations;
 
 namespace UltraStore.Models
 {
@@ -13,16 +14,19 @@ namespace UltraStore.Models
         //public double Price { get; set; }
         public int Id { get; set; }
         public string Title { get; set; } = string.Empty;
-        public decimal Price { get; set; }
-        public int DeveloperId { get; set; }
-        public Developer? Developer { get; set; }
-        public int PublisherId { get; set; }
-        public Publisher? Publisher { get; set; } 
-        public int FranchiseId { get; set; }
-        public Franchise? Franchise { get; set; } 
-        public ICollection<Platforms> Platforms { get; set; } = new List<Platforms>();
+
+        [Display(Name = "Data do primeiro lançamento")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime ReleaseDate { get; set; }
-        public Platform? Platform { get; set; }
-        public int PlatformId { get; set; } 
+        public decimal Price { get; set; }
+        public Developer? Developer { get; set; }
+        public Publisher? Publisher { get; set; } 
+        public Franchise? Franchise { get; set; } 
+        public Platforms? Platforms { get; set; }
+        public int DeveloperId { get; set; }
+        public int PublisherId { get; set; }
+        public int FranchiseId { get; set; }
+        public int PlatformsId { get; set; }
     }
 }

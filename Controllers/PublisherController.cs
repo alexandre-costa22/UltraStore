@@ -47,7 +47,7 @@ namespace UltraStore.Controllers
         // POST: Publisher/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description")] Publisher publisher)
+        public async Task<IActionResult> Create([Bind("Id,Name,Country")] Publisher publisher)
         {
             if (ModelState.IsValid)
             {
@@ -77,7 +77,7 @@ namespace UltraStore.Controllers
         // POST: Publisher/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description")] Publisher publisher)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Country")] Publisher publisher)
         {
             if (id != publisher.Id)
             {
@@ -130,6 +130,11 @@ namespace UltraStore.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            var hasRelatedGames = _context.Game.Any(g => g.PublisherId == id);
+            if (hasRelatedGames)
+            {
+                throw new InvalidOperationException("Cannot delete Publisher because there are related Games.");
+            }
             var publisher = await _context.Publisher.FindAsync(id);
             _context.Publisher.Remove(publisher);
             await _context.SaveChangesAsync();

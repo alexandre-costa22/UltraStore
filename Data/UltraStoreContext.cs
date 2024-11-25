@@ -56,15 +56,15 @@ namespace UltraStore.Data
                 .Property(g => g.Id)
                 .ValueGeneratedOnAdd();
 
-            // Configuração para o relacionamento muitos-para-muitos entre Game e Platforms
-            modelBuilder.Entity<Game>()
-                .HasMany(g => g.Platforms)
-                .WithMany(p => p.Games)
-                .UsingEntity<Dictionary<string, object>>(
-                    "GamePlatform", // Nome da tabela de junção
-                    j => j.HasOne<Platforms>().WithMany().HasForeignKey("PlatformId"),
-                    j => j.HasOne<Game>().WithMany().HasForeignKey("GameId")
-                );
+            //// Configuração para o relacionamento muitos-para-muitos entre Game e Platforms
+            //modelBuilder.Entity<Game>()
+            //    .HasMany(g => g.Platforms)
+            //    .WithMany(p => p.Games)
+            //    .UsingEntity<Dictionary<string, object>>(
+            //        "GamePlatform", // Nome da tabela de junção
+            //        j => j.HasOne<Platforms>().WithMany().HasForeignKey("PlatformId"),
+            //        j => j.HasOne<Game>().WithMany().HasForeignKey("GameId")
+            //    );
 
             // Configurações adicionais (opcional, para garantir que os nomes das tabelas sejam amigáveis)
             modelBuilder.Entity<Clients>().ToTable("Clients");

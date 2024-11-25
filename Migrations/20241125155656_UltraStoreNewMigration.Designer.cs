@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UltraStore.Data;
 
@@ -11,9 +12,10 @@ using UltraStore.Data;
 namespace UltraStore.Migrations
 {
     [DbContext(typeof(UltraStoreContext))]
-    partial class UltraStoreContextModelSnapshot : ModelSnapshot
+    [Migration("20241125155656_UltraStoreNewMigration")]
+    partial class UltraStoreNewMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -105,7 +107,10 @@ namespace UltraStore.Migrations
                     b.Property<int?>("NotaId")
                         .HasColumnType("int");
 
-                    b.Property<int>("PlatformsId")
+                    b.Property<int>("PlatformId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PlatformsId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("Price")
@@ -251,9 +256,7 @@ namespace UltraStore.Migrations
 
                     b.HasOne("UltraStore.Models.Platforms", "Platforms")
                         .WithMany()
-                        .HasForeignKey("PlatformsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PlatformsId");
 
                     b.HasOne("UltraStore.Models.Publisher", "Publisher")
                         .WithMany()
