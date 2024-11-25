@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UltraStore.Data;
 
@@ -11,9 +12,10 @@ using UltraStore.Data;
 namespace UltraStore.Migrations
 {
     [DbContext(typeof(UltraStoreContext))]
-    partial class UltraStoreContextModelSnapshot : ModelSnapshot
+    [Migration("20241125173108_AddPlatformIdToGames4")]
+    partial class AddPlatformIdToGames4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -58,7 +60,10 @@ namespace UltraStore.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("Country")
+                    b.Property<DateTime>("FoundedYear")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Location")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

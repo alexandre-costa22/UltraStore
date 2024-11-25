@@ -47,7 +47,7 @@ namespace UltraStore.Controllers
         // POST: Seller/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description")] Seller seller)
+        public async Task<IActionResult> Create([Bind("Id,Name,Email,BirthDate")] Seller seller)
         {
             if (ModelState.IsValid)
             {
@@ -77,7 +77,7 @@ namespace UltraStore.Controllers
         // POST: Seller/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description")] Seller seller)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Email,BirthDate")] Seller seller)
         {
             if (id != seller.Id)
             {

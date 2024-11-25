@@ -26,5 +26,8 @@
         <input asp-for="Country" class="form-control" />
         <span asp-validation-for="Country" class="text-danger"></span>
     </div>
+    <br />
     <button type="submit" class="btn btn-primary">Create</button>
+    <a href="@Url.Action("Index")" class="btn btn-secondary">Back to List</a>
+
 }

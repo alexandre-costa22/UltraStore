@@ -1,30 +1,32 @@
-﻿@model UltraStore.Models.Seller
+﻿@* @model UltraStore.Models.Nota
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalhes da Nota Fiscal";
 }
 
-<h1>Details</h1>
+<h1>Detalhes da Nota Fiscal #@Model.Id</h1>
 
 <div>
-    <h4>Seller</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-    </dl>
+    <strong>Data da Compra:</strong> @Model.PurchaseDate.ToString("dd/MM/yyyy")
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <strong>Cliente:</strong> @Model.Clients.Name
 </div>
+<div>
+    <strong>Vendedor:</strong> @Model.Seller.Name
+</div>
+<div>
+    <strong>Jogos:</strong>
+    <ul>
+        @foreach (var game in Model.Games)
+        {
+            <li>@game.Name</li>
+        }
+    </ul>
+</div>
+<div>
+    <strong>Total:</strong> @Model.TotalPrice.ToString("C")
+</div>
+
+<a href="@Url.Action("Index", "NF")" class="btn btn-secondary">Voltar</a>
+ *@

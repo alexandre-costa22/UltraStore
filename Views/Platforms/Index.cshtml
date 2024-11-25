@@ -26,6 +26,7 @@
                 <td>@platform.Manufacturer</td>
                 <td>
                     <a href="@Url.Action("Edit", new { id = platform.Id })" class="btn btn-warning">Edit</a>
+                    <a href="@Url.Action("Details",  new { id = platform.Id })" class="btn btn-info">Details</a> 
                     <a href="@Url.Action("Delete", new { id = platform.Id })" class="btn btn-danger">Delete</a>
                 </td>
             </tr>
