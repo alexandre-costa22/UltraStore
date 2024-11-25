@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UltraStore.Data;
 
@@ -11,9 +12,10 @@ using UltraStore.Data;
 namespace UltraStore.Migrations
 {
     [DbContext(typeof(UltraStoreContext))]
-    partial class UltraStoreContextModelSnapshot : ModelSnapshot
+    [Migration("20241125013919_RemoveICollectionFromDeveloper")]
+    partial class RemoveICollectionFromDeveloper
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,6 +23,21 @@ namespace UltraStore.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("GamePlatform", b =>
+                {
+                    b.Property<int>("GameId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PlatformId")
+                        .HasColumnType("int");
+
+                    b.HasKey("GameId", "PlatformId");
+
+                    b.HasIndex("PlatformId");
+
+                    b.ToTable("GamePlatform");
+                });
 
             modelBuilder.Entity("UltraStore.Models.Clients", b =>
                 {
@@ -105,7 +122,10 @@ namespace UltraStore.Migrations
                     b.Property<int?>("NotaId")
                         .HasColumnType("int");
 
-                    b.Property<int>("PlatformsId")
+                    b.Property<int?>("Platform")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PlatformId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("Price")
@@ -128,8 +148,6 @@ namespace UltraStore.Migrations
                     b.HasIndex("FranchiseId");
 
                     b.HasIndex("NotaId");
-
-                    b.HasIndex("PlatformsId");
 
                     b.HasIndex("PublisherId");
 
@@ -234,6 +252,21 @@ namespace UltraStore.Migrations
                     b.ToTable("Sellers", (string)null);
                 });
 
+            modelBuilder.Entity("GamePlatform", b =>
+                {
+                    b.HasOne("UltraStore.Models.Game", null)
+                        .WithMany()
+                        .HasForeignKey("GameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("UltraStore.Models.Platforms", null)
+                        .WithMany()
+                        .HasForeignKey("PlatformId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("UltraStore.Models.Game", b =>
                 {
                     b.HasOne("UltraStore.Models.Developer", "Developer")
@@ -243,7 +276,7 @@ namespace UltraStore.Migrations
                         .IsRequired();
 
                     b.HasOne("UltraStore.Models.Franchise", "Franchise")
-                        .WithMany()
+                        .WithMany("Games")
                         .HasForeignKey("FranchiseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -252,14 +285,8 @@ namespace UltraStore.Migrations
                         .WithMany("Games")
                         .HasForeignKey("NotaId");
 
-                    b.HasOne("UltraStore.Models.Platforms", "Platforms")
-                        .WithMany()
-                        .HasForeignKey("PlatformsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("UltraStore.Models.Publisher", "Publisher")
-                        .WithMany()
+                        .WithMany("Games")
                         .HasForeignKey("PublisherId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -267,8 +294,6 @@ namespace UltraStore.Migrations
                     b.Navigation("Developer");
 
                     b.Navigation("Franchise");
-
-                    b.Navigation("Platforms");
 
                     b.Navigation("Publisher");
                 });
