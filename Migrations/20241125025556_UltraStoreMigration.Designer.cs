@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UltraStore.Data;
 
@@ -11,9 +12,10 @@ using UltraStore.Data;
 namespace UltraStore.Migrations
 {
     [DbContext(typeof(UltraStoreContext))]
-    partial class UltraStoreContextModelSnapshot : ModelSnapshot
+    [Migration("20241125025556_UltraStoreMigration")]
+    partial class UltraStoreMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -96,22 +98,22 @@ namespace UltraStore.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("DeveloperId")
+                    b.Property<int?>("DeveloperId")
                         .HasColumnType("int");
 
-                    b.Property<int>("FranchiseId")
+                    b.Property<int?>("FranchiseId")
                         .HasColumnType("int");
 
                     b.Property<int?>("NotaId")
                         .HasColumnType("int");
 
-                    b.Property<int>("PlatformsId")
+                    b.Property<int?>("PlatformsId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("PublisherId")
+                    b.Property<int?>("PublisherId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("ReleaseDate")
@@ -218,9 +220,6 @@ namespace UltraStore.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<DateTime>("BirthDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -237,32 +236,24 @@ namespace UltraStore.Migrations
             modelBuilder.Entity("UltraStore.Models.Game", b =>
                 {
                     b.HasOne("UltraStore.Models.Developer", "Developer")
-                        .WithMany()
-                        .HasForeignKey("DeveloperId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("Games")
+                        .HasForeignKey("DeveloperId");
 
                     b.HasOne("UltraStore.Models.Franchise", "Franchise")
                         .WithMany()
-                        .HasForeignKey("FranchiseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("FranchiseId");
 
                     b.HasOne("UltraStore.Models.Nota", null)
                         .WithMany("Games")
                         .HasForeignKey("NotaId");
 
                     b.HasOne("UltraStore.Models.Platforms", "Platforms")
-                        .WithMany()
-                        .HasForeignKey("PlatformsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("Games")
+                        .HasForeignKey("PlatformsId");
 
                     b.HasOne("UltraStore.Models.Publisher", "Publisher")
                         .WithMany()
-                        .HasForeignKey("PublisherId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PublisherId");
 
                     b.Navigation("Developer");
 
@@ -280,7 +271,7 @@ namespace UltraStore.Migrations
                         .HasForeignKey("ClientsId");
 
                     b.HasOne("UltraStore.Models.Seller", "Seller")
-                        .WithMany()
+                        .WithMany("Nota")
                         .HasForeignKey("SellerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -290,7 +281,7 @@ namespace UltraStore.Migrations
                     b.Navigation("Seller");
                 });
 
-            modelBuilder.Entity("UltraStore.Models.Franchise", b =>
+            modelBuilder.Entity("UltraStore.Models.Developer", b =>
                 {
                     b.Navigation("Games");
                 });
@@ -300,9 +291,14 @@ namespace UltraStore.Migrations
                     b.Navigation("Games");
                 });
 
-            modelBuilder.Entity("UltraStore.Models.Publisher", b =>
+            modelBuilder.Entity("UltraStore.Models.Platforms", b =>
                 {
                     b.Navigation("Games");
+                });
+
+            modelBuilder.Entity("UltraStore.Models.Seller", b =>
+                {
+                    b.Navigation("Nota");
                 });
 #pragma warning restore 612, 618
         }

@@ -15,13 +15,20 @@ namespace UltraStore.Controllers
             _context = context;
         }
 
-        // GET: Game
+        // GET: Games
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Game.ToListAsync());
+            var games = await _context.Game
+                .Include(g => g.Developer)
+                .Include(g => g.Publisher)
+                .Include(g => g.Franchise)
+                .Include(g => g.Platforms)
+                .ToListAsync();
+
+            return View(games);
         }
 
-        // GET: Game/Details/5
+        // GET: Games/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -30,7 +37,12 @@ namespace UltraStore.Controllers
             }
 
             var game = await _context.Game
+                .Include(g => g.Developer)
+                .Include(g => g.Publisher)
+                .Include(g => g.Franchise)
+                .Include(g => g.Platforms)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (game == null)
             {
                 return NotFound();
@@ -39,21 +51,21 @@ namespace UltraStore.Controllers
             return View(game);
         }
 
-        // GET: Game/Create
+        // GET: Games/Create
         public IActionResult Create()
         {
             ViewData["FranchiseId"] = new SelectList(_context.Franchise, "Id", "Name");
-            ViewData["PlatformId"] = new SelectList(_context.Platforms, "Id", "Name");
             ViewData["DeveloperId"] = new SelectList(_context.Developer, "Id", "Name");
             ViewData["PublisherId"] = new SelectList(_context.Publisher, "Id", "Name");
+            ViewData["PlatformsId"] = new SelectList(_context.Platforms, "Id", "Name");
 
             return View();
         }
 
-        // POST: Game/Create
+        // POST: Games/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,FranchiseId,PlatformId,DeveloperId,PublisherId,ReleaseDate")] Game game)
+        public async Task<IActionResult> Create([Bind("Id,Title,ReleaseDate,Price,DeveloperId,PublisherId,FranchiseId,PlatformsId")] Game game)
         {
             if (ModelState.IsValid)
             {
@@ -61,14 +73,16 @@ namespace UltraStore.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["FranchiseId"] = new SelectList(_context.Franchise, "Id", "Name", game.FranchiseId);
-            ViewData["DeveloperId"] = new SelectList(_context.Developer, "Id", "Name", game.DeveloperId);
-            ViewData["PublisherId"] = new SelectList(_context.Publisher, "Id", "Name", game.PublisherId);
+
+            ViewData["FranchiseId"] = new SelectList(_context.Franchise, "Id", "Name");
+            ViewData["DeveloperId"] = new SelectList(_context.Developer, "Id", "Name");
+            ViewData["PublisherId"] = new SelectList(_context.Publisher, "Id", "Name");
+            ViewData["PlatformsId"] = new SelectList(_context.Platforms, "Id", "Name");
 
             return View(game);
         }
 
-        // GET: Game/Edit/5
+        // GET: Games/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -77,17 +91,24 @@ namespace UltraStore.Controllers
             }
 
             var game = await _context.Game.FindAsync(id);
+
             if (game == null)
             {
                 return NotFound();
             }
+
+            ViewData["FranchiseId"] = new SelectList(_context.Franchise, "Id", "Name");
+            ViewData["DeveloperId"] = new SelectList(_context.Developer, "Id", "Name");
+            ViewData["PublisherId"] = new SelectList(_context.Publisher, "Id", "Name");
+            ViewData["PlatformsId"] = new SelectList(_context.Platforms, "Id", "Name");
+
             return View(game);
         }
 
-        // POST: Game/Edit/5
+        // POST: Games/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,ReleaseDate,Price,DeveloperId,FranchiseId")] Game game)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,ReleaseDate,Price,DeveloperId,PublisherId,FranchiseId,PlatformsId")] Game game)
         {
             if (id != game.Id)
             {
@@ -114,10 +135,16 @@ namespace UltraStore.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+
+            ViewData["FranchiseId"] = new SelectList(_context.Franchise, "Id", "Name");
+            ViewData["DeveloperId"] = new SelectList(_context.Developer, "Id", "Name");
+            ViewData["PublisherId"] = new SelectList(_context.Publisher, "Id", "Name");
+            ViewData["PlatformsId"] = new SelectList(_context.Platforms, "Id", "Name");
+
             return View(game);
         }
 
-        // GET: Game/Delete/5
+        // GET: Games/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -126,7 +153,12 @@ namespace UltraStore.Controllers
             }
 
             var game = await _context.Game
+                .Include(g => g.Developer)
+                .Include(g => g.Publisher)
+                .Include(g => g.Franchise)
+                .Include(g => g.Platforms)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (game == null)
             {
                 return NotFound();
@@ -135,7 +167,7 @@ namespace UltraStore.Controllers
             return View(game);
         }
 
-        // POST: Game/Delete/5
+        // POST: Games/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

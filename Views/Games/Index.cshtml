@@ -30,13 +30,19 @@
                 @Html.DisplayNameFor(model => model.Price)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DeveloperId)
+                @Html.DisplayNameFor(model => model.ReleaseDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FranchiseId)
+                @Html.DisplayNameFor(model => model.Developer)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PublisherId)
+                @Html.DisplayNameFor(model => model.Franchise)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Publisher)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Platforms)
             </th>
         </tr>
     </thead>
@@ -44,7 +50,28 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                    @Html.DisplayFor(modelItem => item.Id)
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReleaseDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Developer.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Franchise.Name)
+            </td>
+            <td>
+                 @Html.DisplayFor(modelItem => item.Publisher.Name)
+            </td>
+            <td>
+                 @Html.DisplayFor(modelItem => item.Platforms.Name)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

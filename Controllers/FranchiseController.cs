@@ -47,7 +47,7 @@ namespace UltraStore.Controllers
         // POST: Franchise/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description")] Franchise franchise)
+        public async Task<IActionResult> Create([Bind("Id,Name")] Franchise franchise)
         {
             if (ModelState.IsValid)
             {
@@ -77,7 +77,7 @@ namespace UltraStore.Controllers
         // POST: Franchise/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description")] Franchise franchise)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] Franchise franchise)
         {
             if (id != franchise.Id)
             {

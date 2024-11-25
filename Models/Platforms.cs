@@ -11,8 +11,7 @@ namespace UltraStore.Models
         //public decimal Price { get; set; }
         //public int Generation {  get; set; }
         public int Id { get; set; }
-        public string Name { get; set; } = string.Empty;
-        public string Manufacturer { get; set; } = string.Empty;
-        public ICollection<Game> Games { get; set; } = new List<Game>();
+        public string Name { get; set; }
+        public string Manufacturer { get; set; }
     }
 }
