@@ -1,10 +1,10 @@
-﻿using Microsoft.CodeAnalysis;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using UltraStore.Models;
 
 namespace UltraStore.Data
 {
-    public class UltraStoreContext : DbContext
+    public class UltraStoreContext : IdentityDbContext<ApplicationUser>
     {
         public UltraStoreContext(DbContextOptions<UltraStoreContext> options)
             : base(options)
@@ -56,17 +56,7 @@ namespace UltraStore.Data
                 .Property(g => g.Id)
                 .ValueGeneratedOnAdd();
 
-            //// Configuração para o relacionamento muitos-para-muitos entre Game e Platforms
-            //modelBuilder.Entity<Game>()
-            //    .HasMany(g => g.Platforms)
-            //    .WithMany(p => p.Games)
-            //    .UsingEntity<Dictionary<string, object>>(
-            //        "GamePlatform", // Nome da tabela de junção
-            //        j => j.HasOne<Platforms>().WithMany().HasForeignKey("PlatformId"),
-            //        j => j.HasOne<Game>().WithMany().HasForeignKey("GameId")
-            //    );
-
-            // Configurações adicionais (opcional, para garantir que os nomes das tabelas sejam amigáveis)
+            // Configurações adicionais para as tabelas
             modelBuilder.Entity<Client>().ToTable("Clients");
             modelBuilder.Entity<Seller>().ToTable("Sellers");
             modelBuilder.Entity<Developer>().ToTable("Developers");
