@@ -9,10 +9,12 @@ namespace UltraStore.Models
 
         [Required(ErrorMessage = "O nome da plataforma é obrigatório.")]
         [StringLength(100, ErrorMessage = "O nome da plataforma deve ter no máximo 100 caracteres.")]
+        [Display(Name = "Nome da plataforma")]
         public string Name { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "O fabricante da plataforma é obrigatório.")]
         [StringLength(100, ErrorMessage = "O nome do fabricante deve ter no máximo 100 caracteres.")]
+        [Display(Name = "Fabricante")]
         public string Manufacturer { get; set; } = string.Empty;
 
         [DataType(DataType.Currency)]
@@ -26,7 +28,7 @@ namespace UltraStore.Models
 
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
-        [Display(Name = "Data de Lançamento")]
+        [Display(Name = "Data de lançamento")]
         public DateTime ReleaseDate { get; set; }
     }
 }

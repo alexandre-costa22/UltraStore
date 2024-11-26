@@ -7,7 +7,7 @@ namespace UltraStore.Models
     {
         public int Id { get; set; }
 
-        [Display(Name = "Data da Compra")]
+        [Display(Name = "Data da compra")]
         [DataType(DataType.Date)]
         public DateTime PurchaseDate { get; set; }
 
@@ -18,22 +18,27 @@ namespace UltraStore.Models
         public string Cpf { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "O Cliente é obrigatório.")]
+        [Display(Name = "ID do Cliente")]
         public int ClientId { get; set; }
+        [Display(Name = "Cliente")]
         public Client? Clients { get; set; }
 
         [Required(ErrorMessage = "O Vendedor é obrigatório.")]
+        [Display(Name = "ID do Vendedor")]
         public int SellerId { get; set; }
+        [Display(Name = "Vendedor")]
         public Seller? Seller { get; set; }
 
         [Required(ErrorMessage = "Os jogos são obrigatórios.")]
+        [Display(Name = "Jogos")]
         public ICollection<Game>? Games { get; set; }
 
         [Range(0.01, double.MaxValue, ErrorMessage = "O preço total deve ser maior que zero.")]
-        [Display(Name = "Preço Total")]
+        [Display(Name = "Preço total")]
         public decimal TotalPrice { get; set; }
 
         [DataType(DataType.DateTime)]
-        [Display(Name = "Data e Hora de Criação")]
+        [Display(Name = "Data e hora de criação")]
         public DateTime CreatedAt { get; set; } = DateTime.Now;
     }
 }
