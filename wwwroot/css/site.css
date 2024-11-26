@@ -21,3 +21,19 @@ body {
     background-attachment: fixed; /* Fixa a imagem para não se mover ao rolar */
     min-height: 100vh; /* Garante que o fundo ocupe toda a altura da tela */
 }
+
+/* Define a animação fade-in */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* Aplica a animação aos elementos com a classe fade-in */
+.fade-in {
+    animation: fadeIn 2s ease-out; /* 2s é o tempo da animação, pode ser ajustado */
+}
