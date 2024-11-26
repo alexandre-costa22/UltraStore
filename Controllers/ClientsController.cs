@@ -1,4 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using UltraStore.Data;
 using UltraStore.Models;
@@ -14,16 +19,18 @@ namespace UltraStore.Controllers
             _context = context;
         }
 
-        // GET: Client
+        // GET: Clients
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Client.ToListAsync());
+              return _context.Client != null ? 
+                          View(await _context.Client.ToListAsync()) :
+                          Problem("Entity set 'UltraStoreContext.Client'  is null.");
         }
 
-        // GET: Client/Details/5
+        // GET: Clients/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
+            if (id == null || _context.Client == null)
             {
                 return NotFound();
             }
@@ -38,16 +45,18 @@ namespace UltraStore.Controllers
             return View(client);
         }
 
-        // GET: Client/Create
+        // GET: Clients/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Client/Create
+        // POST: Clients/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Email,PhoneNumber,BirthDate")] Clients client)
+        public async Task<IActionResult> Create([Bind("Id,Name,Email,PhoneNumber,BirthDate,RegistrationDate,Gender")] Client client)
         {
             if (ModelState.IsValid)
             {
@@ -58,10 +67,10 @@ namespace UltraStore.Controllers
             return View(client);
         }
 
-        // GET: Client/Edit/5
+        // GET: Clients/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
+            if (id == null || _context.Client == null)
             {
                 return NotFound();
             }
@@ -74,10 +83,12 @@ namespace UltraStore.Controllers
             return View(client);
         }
 
-        // POST: Client/Edit/5
+        // POST: Clients/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Email,PhoneNumber,BirthDate")] Clients client)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Email,PhoneNumber,BirthDate,RegistrationDate,Gender")] Client client)
         {
             if (id != client.Id)
             {
@@ -107,10 +118,10 @@ namespace UltraStore.Controllers
             return View(client);
         }
 
-        // GET: Client/Delete/5
+        // GET: Clients/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
+            if (id == null || _context.Client == null)
             {
                 return NotFound();
             }
@@ -125,20 +136,28 @@ namespace UltraStore.Controllers
             return View(client);
         }
 
-        // POST: Client/Delete/5
+        // POST: Clients/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            if (_context.Client == null)
+            {
+                return Problem("Entity set 'UltraStoreContext.Client'  is null.");
+            }
             var client = await _context.Client.FindAsync(id);
-            _context.Client.Remove(client);
+            if (client != null)
+            {
+                _context.Client.Remove(client);
+            }
+            
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool ClientExists(int id)
         {
-            return _context.Client.Any(e => e.Id == id);
+          return (_context.Client?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

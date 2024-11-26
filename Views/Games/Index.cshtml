@@ -4,80 +4,84 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Game</h1>
+<h1>Index</h1>
 
 <p>
-    <a href="@Url.Action("Create")" class="btn btn-primary">Create New Platform</a>
+    <a asp-action="Create">Create New</a>
 </p>
 <table class="table">
-@*     <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
-            <th></th>
-        </tr>
-    </thead> *@
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Title)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Price)
+                @Html.DisplayNameFor(model => model.Description)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ReleaseDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Developer)
+                @Html.DisplayNameFor(model => model.Price)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Franchise)
+                @Html.DisplayNameFor(model => model.Developer)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Publisher)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Franchise)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Platforms)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Rating)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsMultiplayer)
+            </th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Price)
+                @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ReleaseDate)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Developer.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Publisher.ComercialEmail)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Franchise.Name)
             </td>
             <td>
-                 @Html.DisplayFor(modelItem => item.Publisher.Name)
+                @Html.DisplayFor(modelItem => item.Platforms.Manufacturer)
             </td>
             <td>
-                 @Html.DisplayFor(modelItem => item.Platforms.Name)
+                @Html.DisplayFor(modelItem => item.Rating)
             </td>
-
             <td>
-                <a href="@Url.Action("Edit", new { id = item.Id })" class="btn btn-warning">Edit</a>
-                <a href="@Url.Action("Details",  new { id = item.Id })" class="btn btn-info">Details</a>
-                <a href="@Url.Action("Delete", new { id = item.Id })" class="btn btn-danger">Delete</a>
+                @Html.DisplayFor(modelItem => item.IsMultiplayer)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
 }

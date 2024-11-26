@@ -1,4 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using UltraStore.Data;
 using UltraStore.Models;
@@ -14,16 +19,18 @@ namespace UltraStore.Controllers
             _context = context;
         }
 
-        // GET: Seller
+        // GET: Sellers
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Seller.ToListAsync());
+              return _context.Seller != null ? 
+                          View(await _context.Seller.ToListAsync()) :
+                          Problem("Entity set 'UltraStoreContext.Seller'  is null.");
         }
 
-        // GET: Seller/Details/5
+        // GET: Sellers/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
+            if (id == null || _context.Seller == null)
             {
                 return NotFound();
             }
@@ -38,16 +45,18 @@ namespace UltraStore.Controllers
             return View(seller);
         }
 
-        // GET: Seller/Create
+        // GET: Sellers/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Seller/Create
+        // POST: Sellers/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Email,BirthDate")] Seller seller)
+        public async Task<IActionResult> Create([Bind("Id,Name,Email,BirthDate,PhoneNumber,RegistrationDate")] Seller seller)
         {
             if (ModelState.IsValid)
             {
@@ -58,10 +67,10 @@ namespace UltraStore.Controllers
             return View(seller);
         }
 
-        // GET: Seller/Edit/5
+        // GET: Sellers/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
+            if (id == null || _context.Seller == null)
             {
                 return NotFound();
             }
@@ -74,10 +83,12 @@ namespace UltraStore.Controllers
             return View(seller);
         }
 
-        // POST: Seller/Edit/5
+        // POST: Sellers/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Email,BirthDate")] Seller seller)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Email,BirthDate,PhoneNumber,RegistrationDate")] Seller seller)
         {
             if (id != seller.Id)
             {
@@ -107,10 +118,10 @@ namespace UltraStore.Controllers
             return View(seller);
         }
 
-        // GET: Seller/Delete/5
+        // GET: Sellers/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
+            if (id == null || _context.Seller == null)
             {
                 return NotFound();
             }
@@ -125,20 +136,28 @@ namespace UltraStore.Controllers
             return View(seller);
         }
 
-        // POST: Seller/Delete/5
+        // POST: Sellers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            if (_context.Seller == null)
+            {
+                return Problem("Entity set 'UltraStoreContext.Seller'  is null.");
+            }
             var seller = await _context.Seller.FindAsync(id);
-            _context.Seller.Remove(seller);
+            if (seller != null)
+            {
+                _context.Seller.Remove(seller);
+            }
+            
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool SellerExists(int id)
         {
-            return _context.Seller.Any(e => e.Id == id);
+          return (_context.Seller?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

@@ -11,20 +11,20 @@ namespace UltraStore.Data
         {
         }
 
-        public DbSet<Clients> Client { get; set; } = default!;
+        public DbSet<Client> Client { get; set; } = default!;
         public DbSet<Seller> Seller { get; set; } = default!;
         public DbSet<Developer> Developer { get; set; } = default!;
         public DbSet<Franchise> Franchise { get; set; } = default!;
         public DbSet<Game> Game { get; set; } = default!;
-        public DbSet<Nota> Nota { get; set; } = default!;
-        public DbSet<Platforms> Platforms { get; set; } = default!;
+        public DbSet<Receipt> Nota { get; set; } = default!;
+        public DbSet<Models.Software> Platforms { get; set; } = default!;
         public DbSet<Publisher> Publisher { get; set; } = default!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Platforms>()
+            modelBuilder.Entity<Models.Software>()
                 .Property(p => p.Id)
                 .ValueGeneratedOnAdd();
 
@@ -32,7 +32,7 @@ namespace UltraStore.Data
                 .Property(g => g.Id)
                 .ValueGeneratedOnAdd();
 
-            modelBuilder.Entity<Clients>()
+            modelBuilder.Entity<Client>()
                 .Property(g => g.Id)
                 .ValueGeneratedOnAdd();
 
@@ -48,7 +48,7 @@ namespace UltraStore.Data
                 .Property(g => g.Id)
                 .ValueGeneratedOnAdd();
 
-            modelBuilder.Entity<Nota>()
+            modelBuilder.Entity<Receipt>()
                 .Property(g => g.Id)
                 .ValueGeneratedOnAdd();
 
@@ -67,13 +67,12 @@ namespace UltraStore.Data
             //    );
 
             // Configurações adicionais (opcional, para garantir que os nomes das tabelas sejam amigáveis)
-            modelBuilder.Entity<Clients>().ToTable("Clients");
+            modelBuilder.Entity<Client>().ToTable("Clients");
             modelBuilder.Entity<Seller>().ToTable("Sellers");
             modelBuilder.Entity<Developer>().ToTable("Developers");
             modelBuilder.Entity<Franchise>().ToTable("Franchises");
             modelBuilder.Entity<Game>().ToTable("Games");
-            modelBuilder.Entity<Nota>().ToTable("Notas");
-            modelBuilder.Entity<Platforms>().ToTable("Platforms");
+            modelBuilder.Entity<Receipt>().ToTable("Notas");
             modelBuilder.Entity<Publisher>().ToTable("Publishers");
         }
     }

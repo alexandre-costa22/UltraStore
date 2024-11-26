@@ -1,25 +1,33 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
 namespace UltraStore.Models
-
 {
     public class Seller
     {
-        //public int Id { get; set; }
-        //[Required]
-        //[Display(Name = "Nome do Vendedor")]
-        //[StringLength(30, ErrorMessage = "O nome deve ter no máximo 30 characteres")]
-        //public string Name { get; set; }
-        //[EmailAddress(ErrorMessage = "E-mail Inválido")]
-        //public string Email { get; set; }
-        //[Display(Name = "Birth Date")]
-        //[DataType(DataType.Date)]
-        //[DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
-        //public DateTime BirthDate { get; set; }
         public int Id { get; set; }
+
+        [Required(ErrorMessage = "O nome do vendedor é obrigatório.")]
+        [StringLength(100, ErrorMessage = "O nome do vendedor deve ter no máximo 100 caracteres.")]
         public string Name { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "O e-mail do vendedor é obrigatório.")]
+        [EmailAddress(ErrorMessage = "E-mail inválido.")]
+        [StringLength(100, ErrorMessage = "O e-mail do vendedor deve ter no máximo 100 caracteres.")]
         public string Email { get; set; } = string.Empty;
 
+        [Required(ErrorMessage = "A data de nascimento do vendedor é obrigatória.")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        [Display(Name = "Data de Nascimento")]
         public DateTime BirthDate { get; set; }
+
+        [Phone(ErrorMessage = "Número de telefone inválido.")]
+        [StringLength(15, ErrorMessage = "O número de telefone deve ter no máximo 15 caracteres.")]
+        public string PhoneNumber { get; set; } = string.Empty;
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        [Display(Name = "Data de Registro")]
+        public DateTime RegistrationDate { get; set; } = DateTime.Now;
     }
 }

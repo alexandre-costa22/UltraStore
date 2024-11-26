@@ -1,4 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using UltraStore.Data;
 using UltraStore.Models;
@@ -14,16 +19,18 @@ namespace UltraStore.Controllers
             _context = context;
         }
 
-        // GET: Developer
+        // GET: Developers
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Developer.ToListAsync());
+              return _context.Developer != null ? 
+                          View(await _context.Developer.ToListAsync()) :
+                          Problem("Entity set 'UltraStoreContext.Developer'  is null.");
         }
 
-        // GET: Developer/Details/5
+        // GET: Developers/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
+            if (id == null || _context.Developer == null)
             {
                 return NotFound();
             }
@@ -38,16 +45,18 @@ namespace UltraStore.Controllers
             return View(developer);
         }
 
-        // GET: Developer/Create
+        // GET: Developers/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Developer/Create
+        // POST: Developers/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Country")] Developer developer)
+        public async Task<IActionResult> Create([Bind("Id,Name,FoundationDate,DeveloperType,Location")] Developer developer)
         {
             if (ModelState.IsValid)
             {
@@ -58,10 +67,10 @@ namespace UltraStore.Controllers
             return View(developer);
         }
 
-        // GET: Developer/Edit/5
+        // GET: Developers/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
+            if (id == null || _context.Developer == null)
             {
                 return NotFound();
             }
@@ -74,10 +83,12 @@ namespace UltraStore.Controllers
             return View(developer);
         }
 
-        // POST: Developer/Edit/5
+        // POST: Developers/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Country")] Developer developer)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,FoundationDate,DeveloperType,Location")] Developer developer)
         {
             if (id != developer.Id)
             {
@@ -107,10 +118,10 @@ namespace UltraStore.Controllers
             return View(developer);
         }
 
-        // GET: Developer/Delete/5
+        // GET: Developers/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
+            if (id == null || _context.Developer == null)
             {
                 return NotFound();
             }
@@ -125,20 +136,28 @@ namespace UltraStore.Controllers
             return View(developer);
         }
 
-        // POST: Developer/Delete/5
+        // POST: Developers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            if (_context.Developer == null)
+            {
+                return Problem("Entity set 'UltraStoreContext.Developer'  is null.");
+            }
             var developer = await _context.Developer.FindAsync(id);
-            _context.Developer.Remove(developer);
+            if (developer != null)
+            {
+                _context.Developer.Remove(developer);
+            }
+            
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool DeveloperExists(int id)
         {
-            return _context.Developer.Any(e => e.Id == id);
+          return (_context.Developer?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
