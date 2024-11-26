@@ -1,18 +1,23 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    background-image: url('/background.jpg'); /* Caminho para a imagem */
+    background-size: cover; /* Faz com que a imagem cubra toda a tela */
+    background-position: center; /* Centraliza a imagem */
+    background-attachment: fixed; /* Fixa a imagem para não se mover ao rolar */
+    min-height: 100vh; /* Garante que o fundo ocupe toda a altura da tela */
 }
