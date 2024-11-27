@@ -6,12 +6,11 @@
     <title>@ViewData["Title"] - UltraStore - Sua loja de games favorita</title>
     <link rel="icon" href="~/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/UltraStore.styles.css" asp-append-version="true" />
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
+        <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
             <div class="container-fluid">
                 <a class="navbar-brand d-flex align-items-center" asp-area="" asp-controller="Home" asp-action="Index">
                     <img src="~/favicon.ico" alt="UltraStore Logo" width="32" height="32" class="me-2" />
@@ -56,10 +55,10 @@
                     </ul>
 
                     <!-- Search Form -->
-                    <form class="d-flex">
+@*                     <form class="d-flex">
                         <input class="form-control me-sm-2" type="search" placeholder="Digite aqui">
                         <button class="btn btn-secondary my-2 my-sm-0" type="submit">Buscar</button>
-                    </form>
+                    </form> *@
                 </div>
                 <!-- LoginPartial (adicionado aqui) -->
                 @Html.Partial("_LoginPartial")
