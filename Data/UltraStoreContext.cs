@@ -65,5 +65,7 @@ namespace UltraStore.Data
             modelBuilder.Entity<Receipt>().ToTable("Notas");
             modelBuilder.Entity<Publisher>().ToTable("Publishers");
         }
+
+        public DbSet<UltraStore.Models.Review>? Review { get; set; }
     }
 }

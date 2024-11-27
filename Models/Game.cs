@@ -69,5 +69,8 @@ namespace UltraStore.Models
         [Required(ErrorMessage = "A informação sobre o multiplayer é obrigatória.")]
         [Display(Name = "Multiplayer")]
         public bool IsMultiplayer { get; set; }
+
+        [Display(Name = "Avaliações")]
+        public List<Review> Reviews { get; set; }
     }
 }
