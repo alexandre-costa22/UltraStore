@@ -19,6 +19,8 @@ namespace UltraStore.Data
         public DbSet<Receipt> Nota { get; set; } = default!;
         public DbSet<Models.Software> Platforms { get; set; } = default!;
         public DbSet<Publisher> Publisher { get; set; } = default!;
+        public DbSet<Cart> Cart { get; set; } = default;
+        public DbSet<CartItem> CartItem { get; set; } = default;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
