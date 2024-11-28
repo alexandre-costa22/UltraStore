@@ -22,7 +22,7 @@ namespace UltraStore.Controllers
         // GET: Games
         public async Task<IActionResult> Index()
         {
-            var ultraStoreContext = _context.Game.Include(g => g.Developer).Include(g => g.Franchise).Include(g => g.Platforms).Include(g => g.Publisher);
+            var ultraStoreContext = _context.Game.Include(g => g.Developer).Include(g => g.Franchise).Include(g => g.Software).Include(g => g.Publisher);
             return View(await ultraStoreContext.ToListAsync());
         }
 
@@ -37,7 +37,7 @@ namespace UltraStore.Controllers
             var game = await _context.Game
                 .Include(g => g.Developer)
                 .Include(g => g.Franchise)
-                .Include(g => g.Platforms)
+                .Include(g => g.Software)
                 .Include(g => g.Publisher)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (game == null)
@@ -53,7 +53,7 @@ namespace UltraStore.Controllers
         {
             ViewData["DeveloperId"] = new SelectList(_context.Developer, "Id", "Name");
             ViewData["FranchiseId"] = new SelectList(_context.Franchise, "Id", "Name");
-            ViewData["PlatformsId"] = new SelectList(_context.Platforms, "Id", "Manufacturer");
+            ViewData["SoftwareId"] = new SelectList(_context.Software, "Id", "Manufacturer");
             ViewData["PublisherId"] = new SelectList(_context.Publisher, "Id", "ComercialEmail");
             return View();
         }
@@ -63,7 +63,7 @@ namespace UltraStore.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Description,ReleaseDate,Price,DeveloperId,PublisherId,FranchiseId,PlatformsId,Rating,IsMultiplayer")] Game game)
+        public async Task<IActionResult> Create([Bind("Id,Title,Description,ReleaseDate,Price,DeveloperId,PublisherId,FranchiseId,SoftwareId,Rating,IsMultiplayer")] Game game)
         {
             if (ModelState.IsValid)
             {
@@ -73,7 +73,7 @@ namespace UltraStore.Controllers
             }
             ViewData["DeveloperId"] = new SelectList(_context.Developer, "Id", "Name", game.DeveloperId);
             ViewData["FranchiseId"] = new SelectList(_context.Franchise, "Id", "Name", game.FranchiseId);
-            ViewData["PlatformsId"] = new SelectList(_context.Platforms, "Id", "Manufacturer", game.PlatformsId);
+            ViewData["SoftwareId"] = new SelectList(_context.Software, "Id", "Manufacturer", game.SoftwareId);
             ViewData["PublisherId"] = new SelectList(_context.Publisher, "Id", "ComercialEmail", game.PublisherId);
             return View(game);
         }
@@ -93,7 +93,7 @@ namespace UltraStore.Controllers
             }
             ViewData["DeveloperId"] = new SelectList(_context.Developer, "Id", "Name", game.DeveloperId);
             ViewData["FranchiseId"] = new SelectList(_context.Franchise, "Id", "Name", game.FranchiseId);
-            ViewData["PlatformsId"] = new SelectList(_context.Platforms, "Id", "Manufacturer", game.PlatformsId);
+            ViewData["SoftwareId"] = new SelectList(_context.Software, "Id", "Manufacturer", game.SoftwareId);
             ViewData["PublisherId"] = new SelectList(_context.Publisher, "Id", "ComercialEmail", game.PublisherId);
             return View(game);
         }
@@ -103,7 +103,7 @@ namespace UltraStore.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,ReleaseDate,Price,DeveloperId,PublisherId,FranchiseId,PlatformsId,Rating,IsMultiplayer")] Game game)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,ReleaseDate,Price,DeveloperId,PublisherId,FranchiseId,SoftwareId,Rating,IsMultiplayer")] Game game)
         {
             if (id != game.Id)
             {
@@ -132,7 +132,7 @@ namespace UltraStore.Controllers
             }
             ViewData["DeveloperId"] = new SelectList(_context.Developer, "Id", "Name", game.DeveloperId);
             ViewData["FranchiseId"] = new SelectList(_context.Franchise, "Id", "Name", game.FranchiseId);
-            ViewData["PlatformsId"] = new SelectList(_context.Platforms, "Id", "Manufacturer", game.PlatformsId);
+            ViewData["SoftwareId"] = new SelectList(_context.Software, "Id", "Manufacturer", game.SoftwareId);
             ViewData["PublisherId"] = new SelectList(_context.Publisher, "Id", "ComercialEmail", game.PublisherId);
             return View(game);
         }
@@ -148,7 +148,7 @@ namespace UltraStore.Controllers
             var game = await _context.Game
                 .Include(g => g.Developer)
                 .Include(g => g.Franchise)
-                .Include(g => g.Platforms)
+                .Include(g => g.Software)
                 .Include(g => g.Publisher)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (game == null)

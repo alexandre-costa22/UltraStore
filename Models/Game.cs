@@ -39,9 +39,9 @@ namespace UltraStore.Models
         [Display(Name = "Franquia")]
         public Franchise? Franchise { get; set; }
 
-        [Required(ErrorMessage = "A plataforma é obrigatória.")]
-        [Display(Name = "Plataforma")]
-        public Software? Platforms { get; set; }
+        [Required(ErrorMessage = "O software é obrigatória.")]
+        [Display(Name = "Software")]
+        public Software? Software { get; set; }
 
         [Required(ErrorMessage = "O ID do desenvolvedor é obrigatório.")]
         [Display(Name = "ID do desenvolvedor")]
@@ -55,9 +55,9 @@ namespace UltraStore.Models
         [Display(Name = "ID da franquia")]
         public int FranchiseId { get; set; }
 
-        [Required(ErrorMessage = "O ID da plataforma é obrigatório.")]
+        [Required(ErrorMessage = "O ID da software é obrigatório.")]
         [Display(Name = "ID da plataforma")]
-        public int PlatformsId { get; set; }
+        public int SoftwareId { get; set; }
 
         [Required(ErrorMessage = "A classificação indicativa é obrigatória.")]
         [Display(Name = "Classificação indicativa")]

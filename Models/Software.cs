@@ -7,12 +7,12 @@ namespace UltraStore.Models
     {
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "O nome da plataforma é obrigatório.")]
-        [StringLength(100, ErrorMessage = "O nome da plataforma deve ter no máximo 100 caracteres.")]
-        [Display(Name = "Nome da plataforma")]
+        [Required(ErrorMessage = "O nome do software é obrigatório.")]
+        [StringLength(100, ErrorMessage = "O nome do software deve ter no máximo 100 caracteres.")]
+        [Display(Name = "Nome do software")]
         public string Name { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "O fabricante da plataforma é obrigatório.")]
+        [Required(ErrorMessage = "O fabricante do software é obrigatório.")]
         [StringLength(100, ErrorMessage = "O nome do fabricante deve ter no máximo 100 caracteres.")]
         [Display(Name = "Fabricante")]
         public string Manufacturer { get; set; } = string.Empty;

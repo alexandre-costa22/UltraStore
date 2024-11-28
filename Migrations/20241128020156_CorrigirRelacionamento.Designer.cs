@@ -12,8 +12,8 @@ using UltraStore.Data;
 namespace UltraStore.Migrations
 {
     [DbContext(typeof(UltraStoreContext))]
-    [Migration("20241127193003_CreateReviewModel")]
-    partial class CreateReviewModel
+    [Migration("20241128020156_CorrigirRelacionamento")]
+    partial class CorrigirRelacionamento
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -233,6 +233,49 @@ namespace UltraStore.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("UltraStore.Models.Cart", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Cart");
+                });
+
+            modelBuilder.Entity("UltraStore.Models.CartItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("CartId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("GameId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CartId");
+
+                    b.HasIndex("GameId");
+
+                    b.ToTable("CartItem");
+                });
+
             modelBuilder.Entity("UltraStore.Models.Client", b =>
                 {
                     b.Property<int>("Id")
@@ -350,9 +393,6 @@ namespace UltraStore.Migrations
                     b.Property<bool>("IsMultiplayer")
                         .HasColumnType("bit");
 
-                    b.Property<int>("PlatformsId")
-                        .HasColumnType("int");
-
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
@@ -368,6 +408,9 @@ namespace UltraStore.Migrations
                     b.Property<DateTime>("ReleaseDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("SoftwareId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(150)
@@ -379,11 +422,11 @@ namespace UltraStore.Migrations
 
                     b.HasIndex("FranchiseId");
 
-                    b.HasIndex("PlatformsId");
-
                     b.HasIndex("PublisherId");
 
                     b.HasIndex("ReceiptId");
+
+                    b.HasIndex("SoftwareId");
 
                     b.ToTable("Games", (string)null);
                 });
@@ -554,7 +597,7 @@ namespace UltraStore.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Platforms");
+                    b.ToTable("Software", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -608,6 +651,25 @@ namespace UltraStore.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("UltraStore.Models.CartItem", b =>
+                {
+                    b.HasOne("UltraStore.Models.Cart", "Cart")
+                        .WithMany("Items")
+                        .HasForeignKey("CartId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("UltraStore.Models.Game", "Game")
+                        .WithMany()
+                        .HasForeignKey("GameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Cart");
+
+                    b.Navigation("Game");
+                });
+
             modelBuilder.Entity("UltraStore.Models.Game", b =>
                 {
                     b.HasOne("UltraStore.Models.Developer", "Developer")
@@ -622,12 +684,6 @@ namespace UltraStore.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("UltraStore.Models.Software", "Platforms")
-                        .WithMany()
-                        .HasForeignKey("PlatformsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("UltraStore.Models.Publisher", "Publisher")
                         .WithMany()
                         .HasForeignKey("PublisherId")
@@ -638,13 +694,19 @@ namespace UltraStore.Migrations
                         .WithMany("Games")
                         .HasForeignKey("ReceiptId");
 
+                    b.HasOne("UltraStore.Models.Software", "Software")
+                        .WithMany()
+                        .HasForeignKey("SoftwareId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Developer");
 
                     b.Navigation("Franchise");
 
-                    b.Navigation("Platforms");
-
                     b.Navigation("Publisher");
+
+                    b.Navigation("Software");
                 });
 
             modelBuilder.Entity("UltraStore.Models.Receipt", b =>
@@ -683,6 +745,11 @@ namespace UltraStore.Migrations
                     b.Navigation("Client");
 
                     b.Navigation("Game");
+                });
+
+            modelBuilder.Entity("UltraStore.Models.Cart", b =>
+                {
+                    b.Navigation("Items");
                 });
 
             modelBuilder.Entity("UltraStore.Models.Game", b =>

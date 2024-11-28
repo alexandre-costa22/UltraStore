@@ -22,20 +22,20 @@ namespace UltraStore.Controllers
         // GET: Softwares
         public async Task<IActionResult> Index()
         {
-              return _context.Platforms != null ? 
-                          View(await _context.Platforms.ToListAsync()) :
+              return _context.Software != null ? 
+                          View(await _context.Software.ToListAsync()) :
                           Problem("Entity set 'UltraStoreContext.Platforms'  is null.");
         }
 
         // GET: Softwares/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Platforms == null)
+            if (id == null || _context.Software == null)
             {
                 return NotFound();
             }
 
-            var software = await _context.Platforms
+            var software = await _context.Software
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (software == null)
             {
@@ -70,12 +70,12 @@ namespace UltraStore.Controllers
         // GET: Softwares/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Platforms == null)
+            if (id == null || _context.Software == null)
             {
                 return NotFound();
             }
 
-            var software = await _context.Platforms.FindAsync(id);
+            var software = await _context.Software.FindAsync(id);
             if (software == null)
             {
                 return NotFound();
@@ -121,12 +121,12 @@ namespace UltraStore.Controllers
         // GET: Softwares/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Platforms == null)
+            if (id == null || _context.Software == null)
             {
                 return NotFound();
             }
 
-            var software = await _context.Platforms
+            var software = await _context.Software
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (software == null)
             {
@@ -141,14 +141,14 @@ namespace UltraStore.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Platforms == null)
+            if (_context.Software == null)
             {
                 return Problem("Entity set 'UltraStoreContext.Platforms'  is null.");
             }
-            var software = await _context.Platforms.FindAsync(id);
+            var software = await _context.Software.FindAsync(id);
             if (software != null)
             {
-                _context.Platforms.Remove(software);
+                _context.Software.Remove(software);
             }
             
             await _context.SaveChangesAsync();
@@ -157,7 +157,7 @@ namespace UltraStore.Controllers
 
         private bool SoftwareExists(int id)
         {
-          return (_context.Platforms?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_context.Software?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

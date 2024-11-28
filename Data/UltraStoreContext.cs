@@ -17,7 +17,7 @@ namespace UltraStore.Data
         public DbSet<Franchise> Franchise { get; set; } = default!;
         public DbSet<Game> Game { get; set; } = default!;
         public DbSet<Receipt> Nota { get; set; } = default!;
-        public DbSet<Models.Software> Platforms { get; set; } = default!;
+        public DbSet<Software> Software { get; set; } = default!;
         public DbSet<Publisher> Publisher { get; set; } = default!;
         public DbSet<Cart> Cart { get; set; } = default;
         public DbSet<CartItem> CartItem { get; set; } = default;
@@ -26,13 +26,19 @@ namespace UltraStore.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Models.Software>()
+            modelBuilder.Entity<Software>()
                 .Property(p => p.Id)
                 .ValueGeneratedOnAdd();
 
             modelBuilder.Entity<Game>()
                 .Property(g => g.Id)
                 .ValueGeneratedOnAdd();
+
+            //modelBuilder.Entity<Game>()
+            //    .HasOne(g => g.Software)  // Relacionamento de Game com Software
+            //    .WithMany()               // Se Software tiver múltiplos Games
+            //    .HasForeignKey(g => g.SoftwareId)  // Define a chave estrangeira
+            //    .OnDelete(DeleteBehavior.Restrict);  // Define o comportamento de deleção
 
             modelBuilder.Entity<Client>()
                 .Property(g => g.Id)
@@ -66,8 +72,9 @@ namespace UltraStore.Data
             modelBuilder.Entity<Game>().ToTable("Games");
             modelBuilder.Entity<Receipt>().ToTable("Notas");
             modelBuilder.Entity<Publisher>().ToTable("Publishers");
+            modelBuilder.Entity<Software>().ToTable("Software");  
         }
 
-        public DbSet<UltraStore.Models.Review>? Review { get; set; }
+        public DbSet<Review>? Review { get; set; }
     }
 }

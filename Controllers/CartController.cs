@@ -20,7 +20,7 @@ namespace UltraStore.Controllers
         {
             var userId = User.Identity.IsAuthenticated ? User.FindFirstValue(ClaimTypes.NameIdentifier) : null;
 
-            var cart = GetCart(userId); // Método que busca o carrinho do usuário (ou cria um novo)
+            var cart = GetOrCreateCart(userId); // Método que busca o carrinho do usuário (ou cria um novo)
 
             var game = _context.Game.Find(gameId);
             var cartItem = cart.Items.FirstOrDefault(item => item.GameId == gameId);
@@ -45,7 +45,7 @@ namespace UltraStore.Controllers
         }
 
         // Método para buscar o carrinho (criar novo se necessário)
-        private Cart GetCart(string userId)
+        private Cart GetOrCreateCart(string userId)
         {
             if (userId == null)
             {
@@ -64,6 +64,14 @@ namespace UltraStore.Controllers
             }
 
             return cart;
+        }
+
+        public IActionResult Index()
+        {
+            var userId = User.Identity.IsAuthenticated ? User.FindFirstValue(ClaimTypes.NameIdentifier) : null;
+            var cart = GetOrCreateCart(userId);
+
+            return View(cart);
         }
     }
 
