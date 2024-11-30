@@ -14,6 +14,12 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.R
     .AddRoles<IdentityRole>() // Adiciona suporte a papéis
     .AddEntityFrameworkStores<UltraStoreContext>();
 
+// Configuração do redirecionamento de Access Denied
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.AccessDeniedPath = "/Account/AccessDenied"; // Altere para o caminho da sua página personalizada
+});
+
 // Adiciona serviços ao container
 builder.Services.AddControllersWithViews();
 
