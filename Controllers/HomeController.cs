@@ -15,7 +15,6 @@ namespace UltraStore.Controllers
 
         public IActionResult Index()
         {
-            ViewData["email"] = "kamikaze@mail.com";
             return View();
         }
 
