@@ -11,12 +11,21 @@ builder.Services.AddDbContext<UltraStoreContext>(options =>
 
 // Configuração de identidade
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
+    .AddRoles<IdentityRole>() // Adiciona suporte a papéis
     .AddEntityFrameworkStores<UltraStoreContext>();
 
 // Adiciona serviços ao container
 builder.Services.AddControllersWithViews();
 
+// Inicializa papéis ao iniciar a aplicação
 var app = builder.Build();
+using (var scope = app.Services.CreateScope())
+{
+    var serviceProvider = scope.ServiceProvider;
+
+    // Chamada para inicializar os papéis
+    await SeedRoles(serviceProvider);
+}
 
 // Configuração do pipeline HTTP
 if (!app.Environment.IsDevelopment())
@@ -51,3 +60,38 @@ app.MapControllerRoute(
 app.MapRazorPages();
 
 app.Run();
+
+// Método para criar papéis (Admin, etc.)
+async Task SeedRoles(IServiceProvider serviceProvider)
+{
+    var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+
+    // Cria o papel de Admin, se não existir
+    if (!await roleManager.RoleExistsAsync("Admin"))
+    {
+        await roleManager.CreateAsync(new IdentityRole("Admin"));
+    }
+
+    // Opcional: adiciona um usuário Admin padrão
+    var adminEmail = "admin@gmail.com"; 
+    var adminUser = await userManager.FindByEmailAsync(adminEmail);
+
+    if (adminUser == null)
+    {
+        var defaultAdmin = new ApplicationUser
+        {
+            UserName = adminEmail,
+            Email = adminEmail,
+            EmailConfirmed = true,
+            FullName = "Admin Teste",
+            PhoneNumber = "12345678",
+        };
+
+        var createAdmin = await userManager.CreateAsync(defaultAdmin, "Admin@123"); // Substitua por uma senha segura
+        if (createAdmin.Succeeded)
+        {
+            await userManager.AddToRoleAsync(defaultAdmin, "Admin");
+        }
+    }
+}
