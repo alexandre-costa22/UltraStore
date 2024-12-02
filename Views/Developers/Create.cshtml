@@ -4,6 +4,8 @@
     ViewData["Title"] = "Create Developer";
 }
 
+@using UltraStore.Enums
+
 <h1>Create</h1>
 
 <h4>Developer</h4>
@@ -22,9 +24,14 @@
                 <input asp-for="FoundationDate" class="form-control" />
                 <span asp-validation-for="FoundationDate" class="text-danger"></span>
             </div>
-            <div class="form-group">
+@*            <div class="form-group">
                 <label asp-for="DeveloperType" class="control-label"></label>
                 <select asp-for="DeveloperType" class="form-control"></select>
+                <span asp-validation-for="DeveloperType" class="text-danger"></span>
+            </div>*@
+            <div class="form-group">
+                <label asp-for="DeveloperType" class="control-label"></label>
+                <select asp-for="DeveloperType" class="form-control" asp-items="Html.GetEnumSelectList<DeveloperType>()"></select>
                 <span asp-validation-for="DeveloperType" class="text-danger"></span>
             </div>
             <div class="form-group">

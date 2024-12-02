@@ -63,9 +63,6 @@ namespace UltraStore.Models
         [Display(Name = "Classificação indicativa")]
         public Rating Rating { get; set; }
 
-        // [Display(Name = "Línguas disponíveis")]
-        // public List<int> Languages { get; set; } = new List<int>(); TODO
-
         [Required(ErrorMessage = "A informação sobre o multiplayer é obrigatória.")]
         [Display(Name = "Multiplayer")]
         public bool IsMultiplayer { get; set; }
