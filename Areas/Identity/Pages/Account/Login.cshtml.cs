@@ -14,9 +14,9 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using UltraStore.Models;
+using LvlUp.Models;
 
-namespace UltraStore.Areas.Identity.Pages.Account
+namespace LvlUp.Areas.Identity.Pages.Account
 {
     public class LoginModel : PageModel
     {

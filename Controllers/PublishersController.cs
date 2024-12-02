@@ -6,18 +6,18 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using UltraStore.Data;
-using UltraStore.Models;
+using LvlUp.Data;
+using LvlUp.Models;
 
-namespace UltraStore.Controllers
+namespace LvlUp.Controllers
 {
     [Authorize(Roles = "Admin")]
 
     public class PublishersController : Controller
     {
-        private readonly UltraStoreContext _context;
+        private readonly LvlUpContext _context;
 
-        public PublishersController(UltraStoreContext context)
+        public PublishersController(LvlUpContext context)
         {
             _context = context;
         }
@@ -27,7 +27,7 @@ namespace UltraStore.Controllers
         {
               return _context.Publisher != null ? 
                           View(await _context.Publisher.ToListAsync()) :
-                          Problem("Entity set 'UltraStoreContext.Publisher'  is null.");
+                          Problem("Entity set 'LvlUpContext.Publisher'  is null.");
         }
 
         // GET: Publishers/Details/5
@@ -146,7 +146,7 @@ namespace UltraStore.Controllers
         {
             if (_context.Publisher == null)
             {
-                return Problem("Entity set 'UltraStoreContext.Publisher'  is null.");
+                return Problem("Entity set 'LvlUpContext.Publisher'  is null.");
             }
             var publisher = await _context.Publisher.FindAsync(id);
             if (publisher != null)

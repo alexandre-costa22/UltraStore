@@ -1,4 +1,4 @@
-namespace UltraStore.Models
+namespace LvlUp.Models
 
 {
     public class ErrorViewModel

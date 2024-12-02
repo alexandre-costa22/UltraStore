@@ -6,18 +6,18 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using UltraStore.Data;
-using UltraStore.Models;
+using LvlUp.Data;
+using LvlUp.Models;
 
-namespace UltraStore.Controllers
+namespace LvlUp.Controllers
 {
     [Authorize(Roles = "Admin")]
 
     public class ReceiptsController : Controller
     {
-        private readonly UltraStoreContext _context;
+        private readonly LvlUpContext _context;
 
-        public ReceiptsController(UltraStoreContext context)
+        public ReceiptsController(LvlUpContext context)
         {
             _context = context;
         }
@@ -25,8 +25,8 @@ namespace UltraStore.Controllers
         // GET: Receipts
         public async Task<IActionResult> Index()
         {
-            var ultraStoreContext = _context.Nota.Include(r => r.Clients).Include(r => r.Seller);
-            return View(await ultraStoreContext.ToListAsync());
+            var LvlUpContext = _context.Nota.Include(r => r.Clients).Include(r => r.Seller);
+            return View(await LvlUpContext.ToListAsync());
         }
 
         // GET: Receipts/Details/5
@@ -157,7 +157,7 @@ namespace UltraStore.Controllers
         {
             if (_context.Nota == null)
             {
-                return Problem("Entity set 'UltraStoreContext.Nota'  is null.");
+                return Problem("Entity set 'LvlUpContext.Nota'  is null.");
             }
             var receipt = await _context.Nota.FindAsync(id);
             if (receipt != null)

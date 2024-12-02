@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace UltraStore.Enums
+namespace LvlUp.Enums
 {
     public enum Gender
     {

@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using UltraStore.Models;
+using LvlUp.Models;
 
-namespace UltraStore.Data
+namespace LvlUp.Data
 {
-    public class UltraStoreContext : IdentityDbContext<ApplicationUser>
+    public class LvlUpContext : IdentityDbContext<ApplicationUser>
     {
-        public UltraStoreContext(DbContextOptions<UltraStoreContext> options)
+        public LvlUpContext(DbContextOptions<LvlUpContext> options)
             : base(options)
         {
         }

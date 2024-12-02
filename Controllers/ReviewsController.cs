@@ -6,18 +6,18 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using UltraStore.Data;
-using UltraStore.Models;
+using LvlUp.Data;
+using LvlUp.Models;
 
-namespace UltraStore.Controllers
+namespace LvlUp.Controllers
 {
     [Authorize(Roles = "Admin")]
 
     public class ReviewsController : Controller
     {
-        private readonly UltraStoreContext _context;
+        private readonly LvlUpContext _context;
 
-        public ReviewsController(UltraStoreContext context)
+        public ReviewsController(LvlUpContext context)
         {
             _context = context;
         }
@@ -25,8 +25,8 @@ namespace UltraStore.Controllers
         // GET: Reviews
         public async Task<IActionResult> Index()
         {
-            var ultraStoreContext = _context.Review.Include(r => r.Client);
-            return View(await ultraStoreContext.ToListAsync());
+            var LvlUpContext = _context.Review.Include(r => r.Client);
+            return View(await LvlUpContext.ToListAsync());
         }
 
         // GET: Reviews/Details/5
@@ -151,7 +151,7 @@ namespace UltraStore.Controllers
         {
             if (_context.Review == null)
             {
-                return Problem("Entity set 'UltraStoreContext.Review'  is null.");
+                return Problem("Entity set 'LvlUpContext.Review'  is null.");
             }
             var review = await _context.Review.FindAsync(id);
             if (review != null)

@@ -6,18 +6,18 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using UltraStore.Data;
-using UltraStore.Models;
+using LvlUp.Data;
+using LvlUp.Models;
 
-namespace UltraStore.Controllers
+namespace LvlUp.Controllers
 {
     [Authorize(Roles = "Admin")]
 
     public class GamesController : Controller
     {
-        private readonly UltraStoreContext _context;
+        private readonly LvlUpContext _context;
 
-        public GamesController(UltraStoreContext context)
+        public GamesController(LvlUpContext context)
         {
             _context = context;
         }
@@ -25,8 +25,8 @@ namespace UltraStore.Controllers
         // GET: Games
         public async Task<IActionResult> Index()
         {
-            var ultraStoreContext = _context.Game.Include(g => g.Developer).Include(g => g.Franchise).Include(g => g.Software).Include(g => g.Publisher);
-            return View(await ultraStoreContext.ToListAsync());
+            var LvlUpContext = _context.Game.Include(g => g.Developer).Include(g => g.Franchise).Include(g => g.Software).Include(g => g.Publisher);
+            return View(await LvlUpContext.ToListAsync());
         }
 
         // GET: Games/Details/5
@@ -169,7 +169,7 @@ namespace UltraStore.Controllers
         {
             if (_context.Game == null)
             {
-                return Problem("Entity set 'UltraStoreContext.Game'  is null.");
+                return Problem("Entity set 'LvlUpContext.Game'  is null.");
             }
             var game = await _context.Game.FindAsync(id);
             if (game != null)

@@ -6,18 +6,18 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using UltraStore.Data;
-using UltraStore.Models;
+using LvlUp.Data;
+using LvlUp.Models;
 
-namespace UltraStore.Controllers
+namespace LvlUp.Controllers
 {
     [Authorize(Roles = "Admin")]
 
     public class FranchisesController : Controller
     {
-        private readonly UltraStoreContext _context;
+        private readonly LvlUpContext _context;
 
-        public FranchisesController(UltraStoreContext context)
+        public FranchisesController(LvlUpContext context)
         {
             _context = context;
         }
@@ -27,7 +27,7 @@ namespace UltraStore.Controllers
         {
               return _context.Franchise != null ? 
                           View(await _context.Franchise.ToListAsync()) :
-                          Problem("Entity set 'UltraStoreContext.Franchise'  is null.");
+                          Problem("Entity set 'LvlUpContext.Franchise'  is null.");
         }
 
         // GET: Franchises/Details/5
@@ -146,7 +146,7 @@ namespace UltraStore.Controllers
         {
             if (_context.Franchise == null)
             {
-                return Problem("Entity set 'UltraStoreContext.Franchise'  is null.");
+                return Problem("Entity set 'LvlUpContext.Franchise'  is null.");
             }
             var franchise = await _context.Franchise.FindAsync(id);
             if (franchise != null)

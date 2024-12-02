@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace UltraStore.Controllers
+namespace LvlUp.Controllers
 {
     public class AccountController : Controller
     {

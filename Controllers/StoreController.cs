@@ -1,13 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SQLitePCL;
-using UltraStore.Data;
-using UltraStore.Models;
+using LvlUp.Data;
+using LvlUp.Models;
 
-namespace UltraStore.Controllers
+namespace LvlUp.Controllers
 {
     public class StoreController : Controller
     {
-        private readonly UltraStoreContext _context;
+        private readonly LvlUpContext _context;
         public IActionResult Index()
         {
             return View();

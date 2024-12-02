@@ -1,18 +1,18 @@
 using Microsoft.EntityFrameworkCore;
-using UltraStore.Data;
+using LvlUp.Data;
 using Microsoft.AspNetCore.Identity;
-using UltraStore.Models;
+using LvlUp.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Configuração do banco de dados
-builder.Services.AddDbContext<UltraStoreContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("UltraStoreContext")));
+builder.Services.AddDbContext<LvlUpContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("LvlUpContext")));
 
 // Configuração de identidade
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddRoles<IdentityRole>() // Adiciona suporte a papéis
-    .AddEntityFrameworkStores<UltraStoreContext>();
+    .AddEntityFrameworkStores<LvlUpContext>();
 
 // Configuração do redirecionamento de Access Denied
 builder.Services.ConfigureApplicationCookie(options =>

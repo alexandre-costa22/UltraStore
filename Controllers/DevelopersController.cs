@@ -6,18 +6,18 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using UltraStore.Data;
-using UltraStore.Models;
+using LvlUp.Data;
+using LvlUp.Models;
 
-namespace UltraStore.Controllers
+namespace LvlUp.Controllers
 {
     [Authorize(Roles = "Admin")]
 
     public class DevelopersController : Controller
     {
-        private readonly UltraStoreContext _context;
+        private readonly LvlUpContext _context;
 
-        public DevelopersController(UltraStoreContext context)
+        public DevelopersController(LvlUpContext context)
         {
             _context = context;
         }
@@ -27,7 +27,7 @@ namespace UltraStore.Controllers
         {
               return _context.Developer != null ? 
                           View(await _context.Developer.ToListAsync()) :
-                          Problem("Entity set 'UltraStoreContext.Developer'  is null.");
+                          Problem("Entity set 'LvlUpContext.Developer'  is null.");
         }
 
         // GET: Developers/Details/5
@@ -146,7 +146,7 @@ namespace UltraStore.Controllers
         {
             if (_context.Developer == null)
             {
-                return Problem("Entity set 'UltraStoreContext.Developer'  is null.");
+                return Problem("Entity set 'LvlUpContext.Developer'  is null.");
             }
             var developer = await _context.Developer.FindAsync(id);
             if (developer != null)

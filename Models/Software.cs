@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using UltraStore.Models;
+using LvlUp.Models;
 
-namespace UltraStore.Models
+namespace LvlUp.Models
 {
     public class Software
     {

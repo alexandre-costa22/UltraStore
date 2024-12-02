@@ -1,4 +1,4 @@
-﻿@model IEnumerable<UltraStore.Models.Developer>
+﻿@model IEnumerable<LvlUp.Models.Developer>
 
 @{
     ViewData["Title"] = "Developer Index";
@@ -38,7 +38,7 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DeveloperType)
-                @Enum.GetName(typeof(UltraStore.Enums.DeveloperType), item.DeveloperType)
+                @Enum.GetName(typeof(LvlUp.Enums.DeveloperType), item.DeveloperType)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Location)

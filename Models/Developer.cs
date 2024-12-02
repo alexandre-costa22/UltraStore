@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using UltraStore.Enums;
+using LvlUp.Enums;
 
-namespace UltraStore.Models
+namespace LvlUp.Models
 {
     public class Developer
     {

@@ -11,9 +11,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
-using UltraStore.Models;
+using LvlUp.Models;
 
-namespace UltraStore.Areas.Identity.Pages.Account
+namespace LvlUp.Areas.Identity.Pages.Account
 {
     public class ResetPasswordModel : PageModel
     {

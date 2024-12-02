@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace UltraStore.Models
+namespace LvlUp.Models
 {
     public class Franchise
     {

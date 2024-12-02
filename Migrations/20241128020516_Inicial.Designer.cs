@@ -5,13 +5,13 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using UltraStore.Data;
+using LvlUp.Data;
 
 #nullable disable
 
 namespace UltraStore.Migrations
 {
-    [DbContext(typeof(UltraStoreContext))]
+    [DbContext(typeof(LvlUpContext))]
     [Migration("20241128020516_Inicial")]
     partial class Inicial
     {

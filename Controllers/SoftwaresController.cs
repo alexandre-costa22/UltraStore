@@ -6,18 +6,18 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using UltraStore.Data;
-using UltraStore.Models;
+using LvlUp.Data;
+using LvlUp.Models;
 
-namespace UltraStore.Controllers
+namespace LvlUp.Controllers
 {
     [Authorize(Roles = "Admin")]
 
     public class SoftwaresController : Controller
     {
-        private readonly UltraStoreContext _context;
+        private readonly LvlUpContext _context;
 
-        public SoftwaresController(UltraStoreContext context)
+        public SoftwaresController(LvlUpContext context)
         {
             _context = context;
         }
@@ -27,7 +27,7 @@ namespace UltraStore.Controllers
         {
               return _context.Software != null ? 
                           View(await _context.Software.ToListAsync()) :
-                          Problem("Entity set 'UltraStoreContext.Platforms'  is null.");
+                          Problem("Entity set 'LvlUpContext.Platforms'  is null.");
         }
 
         // GET: Softwares/Details/5
@@ -146,7 +146,7 @@ namespace UltraStore.Controllers
         {
             if (_context.Software == null)
             {
-                return Problem("Entity set 'UltraStoreContext.Platforms'  is null.");
+                return Problem("Entity set 'LvlUpContext.Platforms'  is null.");
             }
             var software = await _context.Software.FindAsync(id);
             if (software != null)

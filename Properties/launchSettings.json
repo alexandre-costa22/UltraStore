@@ -8,7 +8,7 @@
     }
   },
   "profiles": {
-    "UltraStore": {
+    "LvlUp": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

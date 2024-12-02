@@ -1,4 +1,4 @@
-﻿namespace UltraStore.Enums
+﻿namespace LvlUp.Enums
 {
     public enum Language
     {
