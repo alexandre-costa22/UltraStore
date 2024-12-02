@@ -4,6 +4,8 @@
     ViewData["Title"] = "Edit Client";
 }
 
+@using UltraStore.Enums
+
 <h1>Edit</h1>
 
 <h4>Client</h4>
@@ -40,7 +42,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Gender" class="control-label"></label>
-                <select asp-for="Gender" class="form-control"></select>
+                <select asp-for="Gender" class="form-control" asp-items="Html.GetEnumSelectList<Gender>()"></select>
                 <span asp-validation-for="Gender" class="text-danger"></span>
             </div>
             <div class="form-group">
