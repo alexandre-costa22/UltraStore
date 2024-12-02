@@ -5,12 +5,12 @@
     ViewData["Title"] = "Logar-se";
 }
 
-<h1>@ViewData["Title"]</h1>
+<h1 style="color: #FFA500;">@ViewData["Title"]</h1>
 <div class="row">
     <div class="col-md-4">
         <section>
             <form id="account" method="post">
-                <h2>Faça login com sua conta local.</h2>
+                <h2 style="color: #FFA500;">Faça login com sua conta local.</h2>
                 <hr />
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-floating">
@@ -50,7 +50,7 @@
     </div>
     <div class="col-md-6 col-md-offset-2">
         <section>
-            <h3>Use outro serviço para fazer login.</h3>
+            <h3 style="color: #FFA500;">Use outro serviço para fazer login.</h3>
             <hr />
             @{
                 if ((Model.ExternalLogins?.Count ?? 0) == 0)
@@ -70,6 +70,7 @@
                         <div>
                             <p>
                                 @foreach (var provider in Model.ExternalLogins!)
+
                                 {
                                     <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Entrar usando sua conta @provider.DisplayName">@provider.DisplayName</button>
                                 }
