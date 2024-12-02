@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>LvlUp Store - Stay tuned.</title>
+    <title>LVL-UP Store - Stay tuned.</title>
     <link rel="icon" href="~/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script> <!-- FontAwesome para os ícones -->
@@ -79,8 +79,12 @@
                     </ul>
                     <!-- Search box centered -->
                     <div class="d-flex justify-content-center flex-grow-1">
-                        <input type="text" class="form-control" placeholder="Pesquise algum produto aqui." style="max-width: 400px; width: 50%;" />
+                        <input type="text" id="searchInput" class="form-control" placeholder="Pesquise algum produto aqui." style="max-width: 400px; width: 50%;" />
                     </div>
+
+                    <div id="searchResults" class="mt-2" style="display: none;"></div>
+
+
 
                 </div>
                 <!-- Collapsible wrapper -->
@@ -167,5 +171,42 @@
     </footer>
 
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Seleciona o campo de busca e a área de resultados
+        const searchInput = document.getElementById('searchInput');
+        const searchResults = document.getElementById('searchResults');
+
+        // Função para lidar com a pesquisa
+        searchInput.addEventListener('keyup', function() {
+            const query = searchInput.value.trim();
+
+            // Verifica se a pesquisa não está vazia
+            if (query.length > 0) {
+                // Faz a requisição AJAX
+                fetch(`/Store/SearchGames?query=${encodeURIComponent(query)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        // Atualiza os resultados
+                        searchResults.innerHTML = '';
+
+                        if (data.results.length > 0) {
+                            data.results.forEach(game => {
+                                const resultItem = document.createElement('div');
+                                resultItem.classList.add('result-item');
+                                resultItem.innerHTML = `<strong>${game.title}</strong>`;
+                                searchResults.appendChild(resultItem);
+                            });
+                            searchResults.style.display = 'block';
+                        } else {
+                            searchResults.style.display = 'none';
+                        }
+                    })
+                    .catch(error => console.error('Erro na pesquisa:', error));
+            } else {
+                searchResults.style.display = 'none';
+            }
+        });
+    </script>
+
 </body>
 </html>
