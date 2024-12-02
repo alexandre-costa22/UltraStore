@@ -61,7 +61,19 @@ app.UseStatusCodePages(async context =>
 // Configuração das rotas
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Store}/{action=Index}/{id?}");
+
+//app.UseEndpoints(endpoints =>
+//{
+//    endpoints.MapControllerRoute(
+//        name: "default",
+//        pattern: "{controller=Store}/{action=Index}/{id?}");
+
+//    endpoints.MapControllerRoute(
+//        name: "admin",
+//        pattern: "Admin/{controller=Admin}/{action=Index}/{id?}");
+//});
+
 
 app.MapRazorPages();
 
