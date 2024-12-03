@@ -1,0 +1,47 @@
+﻿@model LvlUp.Models.Game
+
+@{
+    ViewData["Title"] = "Detalhes do Jogo - " + Model.Title;
+}
+
+@{
+    Layout = "_StoreLayout";
+}
+
+<!-- Estilos CSS para alterar a cor dos títulos -->
+<style>
+    h1, h2, h3, h4 {
+        color: #FFA500; /* Cor Laranja */
+    }
+</style>
+
+<div class="container mt-5">
+    <h1 class="display-4 text-center">@Model.Title</h1>
+
+    <div class="row">
+        <div class="col-md-6">
+            <img src="@Url.Content($"~/{Model.ImagePath}")" alt="@Model.Title" class="img-fluid rounded">
+        </div>
+        <div class="col-md-6">
+            <h3>Descrição:</h3>
+            <p>@Model.Description</p>
+
+            <h4>Informações</h4>
+            <ul>
+                <li><strong>Data de Lançamento:</strong> @Model.ReleaseDate.ToString("dd/MM/yyyy")</li>
+                <li><strong>Preço:</strong> R$ @Model.Price.ToString("F2")</li>
+                <li><strong>Desenvolvedor:</strong> @Model.Developer?.Name</li>
+                <li><strong>Publisher:</strong> @Model.Publisher?.Name</li>
+                <li><strong>Franquia:</strong> @Model.Franchise?.Name</li>
+                <li><strong>Plataforma:</strong> @Model.Software?.Name</li>
+                <li><strong>Classificação:</strong> @Model.Rating.ToString()</li>
+                <li><strong>Multiplayer:</strong> @(Model.IsMultiplayer ? "Sim" : "Não")</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- Botão para voltar à lista de jogos -->
+<div class="text-center mt-4">
+    <a href="@Url.Action("Index", "Home")" class="btn btn-primary">Voltar para a loja</a>
+</div>
