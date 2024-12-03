@@ -8,6 +8,10 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using LvlUp.Data;
 using LvlUp.Models;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using System.IO;
+
 
 namespace LvlUp.Controllers
 {
@@ -16,10 +20,14 @@ namespace LvlUp.Controllers
     public class GamesController : Controller
     {
         private readonly LvlUpContext _context;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public GamesController(LvlUpContext context)
+
+        public GamesController(LvlUpContext context, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
+            _webHostEnvironment = webHostEnvironment;
+
         }
 
         // GET: Games
@@ -66,14 +74,34 @@ namespace LvlUp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Description,ReleaseDate,Price,DeveloperId,PublisherId,FranchiseId,SoftwareId,Rating,IsMultiplayer")] Game game)
+        public async Task<IActionResult> Create([Bind("Id,Title,Description,ReleaseDate,Price,DeveloperId,PublisherId,FranchiseId,SoftwareId,Rating,IsMultiplayer")] Game game, IFormFile? imageFile)
         {
             if (ModelState.IsValid)
             {
+                if (imageFile != null && imageFile.Length > 0)
+                {
+                    var fileName = Path.GetRandomFileName() + Path.GetExtension(imageFile.FileName);
+
+                    var uploadPath = Path.Combine(_webHostEnvironment.WebRootPath, "images", "games");
+                    Directory.CreateDirectory(uploadPath);
+
+                    var filePath = Path.Combine(uploadPath, fileName);
+
+
+                    using(var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await imageFile.CopyToAsync(stream);
+                    }
+
+                    game.ImagePath = Path.Combine("images", "games", fileName).Replace("\\", "/");
+                }
+
+
                 _context.Add(game);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
             ViewData["DeveloperId"] = new SelectList(_context.Developer, "Id", "Name", game.DeveloperId);
             ViewData["FranchiseId"] = new SelectList(_context.Franchise, "Id", "Name", game.FranchiseId);
             ViewData["SoftwareId"] = new SelectList(_context.Software, "Id", "Manufacturer", game.SoftwareId);
@@ -106,7 +134,7 @@ namespace LvlUp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,ReleaseDate,Price,DeveloperId,PublisherId,FranchiseId,SoftwareId,Rating,IsMultiplayer")] Game game)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,ReleaseDate,Price,DeveloperId,PublisherId,FranchiseId,SoftwareId,Rating,IsMultiplayer,ImagePath")] Game game)
         {
             if (id != game.Id)
             {

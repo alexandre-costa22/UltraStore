@@ -63,6 +63,9 @@ namespace LvlUp.Models
         [Display(Name = "Multiplayer")]
         public bool IsMultiplayer { get; set; }
 
+        [Display(Name = "Imagem do jogo")]
+        public string? ImagePath { get; set; }
+
     }
     
 }

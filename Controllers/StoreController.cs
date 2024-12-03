@@ -8,9 +8,15 @@ namespace LvlUp.Controllers
     public class StoreController : Controller
     {
         private readonly LvlUpContext _context;
+
+        public StoreController (LvlUpContext context)
+        {
+            _context = context;
+        }
         public IActionResult Index()
         {
-            return View();
+            var games = _context.Game.ToList();
+            return View(games);
         }
 
         [HttpGet]
