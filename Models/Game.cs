@@ -27,19 +27,15 @@ namespace LvlUp.Models
         [Display(Name = "Preço")]
         public decimal Price { get; set; }
 
-        [Required(ErrorMessage = "O desenvolvedor é obrigatório.")]
         [Display(Name = "Desenvolvedor")]
         public Developer? Developer { get; set; }
 
-        [Required(ErrorMessage = "A publisher é obrigatória.")]
         [Display(Name = "Publisher")]
         public Publisher? Publisher { get; set; }
 
-        [Required(ErrorMessage = "A franquia é obrigatória.")]
         [Display(Name = "Franquia")]
         public Franchise? Franchise { get; set; }
 
-        [Required(ErrorMessage = "O software é obrigatória.")]
         [Display(Name = "Software")]
         public Software? Software { get; set; }
 
@@ -67,7 +63,6 @@ namespace LvlUp.Models
         [Display(Name = "Multiplayer")]
         public bool IsMultiplayer { get; set; }
 
-        [Display(Name = "Avaliações")]
-        public List<Review> Reviews { get; set; }
     }
+    
 }
