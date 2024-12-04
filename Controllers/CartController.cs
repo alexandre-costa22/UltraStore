@@ -1,8 +1,9 @@
-﻿using System.Security.Claims;
+﻿using LvlUp.Data;
+using LvlUp.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using LvlUp.Data;
-using LvlUp.Models;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace LvlUp.Controllers
 {
@@ -15,64 +16,80 @@ namespace LvlUp.Controllers
             _context = context;
         }
 
-        // Adicionar ao carrinho
-        public IActionResult AddToCart(int gameId, int quantity)
+        // Adiciona um item ao carrinho
+        [HttpGet]
+        public async Task<IActionResult> AddToCart(int gameId)
         {
-            var userId = User.Identity.IsAuthenticated ? User.FindFirstValue(ClaimTypes.NameIdentifier) : null;
+            // Verifica o usuário logado
+            var userId = User.Identity.Name; // Assumindo que o nome de usuário é o ID. Caso contrário, ajuste conforme necessário.
 
-            var cart = GetOrCreateCart(userId); // Método que busca o carrinho do usuário (ou cria um novo)
+            if (userId == null)
+            {
+                return RedirectToAction("Login", "Account"); // Redireciona para a página de login, caso o usuário não esteja autenticado.
+            }
 
-            var game = _context.Game.Find(gameId);
+            // Encontra o carrinho do usuário ou cria um novo
+            var cart = await _context.Cart
+                .Include(c => c.Items)
+                .FirstOrDefaultAsync(c => c.UserId == userId);
+
+            if (cart == null)
+            {
+                cart = new Cart
+                {
+                    UserId = userId,
+                    Items = new List<CartItem>()
+                };
+                _context.Cart.Add(cart);
+                await _context.SaveChangesAsync();
+            }
+
+            // Verifica se o item já existe no carrinho
             var cartItem = cart.Items.FirstOrDefault(item => item.GameId == gameId);
 
             if (cartItem != null)
             {
-                cartItem.Quantity += quantity; // Atualiza a quantidade
+                // Se o item já existe no carrinho, aumenta a quantidade
+                cartItem.Quantity++;
             }
             else
             {
+                // Se o item não existe, adiciona um novo item ao carrinho
                 cart.Items.Add(new CartItem
                 {
                     GameId = gameId,
-                    Quantity = quantity,
-                    Cart = cart
+                    Quantity = 1
                 });
             }
 
-            _context.SaveChanges();
+            // Salva as alterações no banco de dados
+            await _context.SaveChangesAsync();
 
-            return RedirectToAction("Index"); // Redireciona para a página do carrinho
+            // Redireciona o usuário para a página do carrinho
+            return RedirectToAction("Index");
         }
 
-        // Método para buscar o carrinho (criar novo se necessário)
-        private Cart GetOrCreateCart(string userId)
-        {
-            if (userId == null)
-            {
-                // Lógica para carrinho de visitante (sessão)
-                return new Cart { Items = new List<CartItem>() }; // Simples exemplo, você pode usar sessão aqui
-            }
-
-            var cart = _context.Cart.Include(c => c.Items)
-                                     .FirstOrDefault(c => c.UserId == userId);
-
-            if (cart == null)
-            {
-                cart = new Cart { UserId = userId, Items = new List<CartItem>() };
-                _context.Cart.Add(cart);
-                _context.SaveChanges();
-            }
-
-            return cart;
-        }
-
+        // Exibe o carrinho
         public IActionResult Index()
         {
-            var userId = User.Identity.IsAuthenticated ? User.FindFirstValue(ClaimTypes.NameIdentifier) : null;
-            var cart = GetOrCreateCart(userId);
+            var userId = User.Identity.Name;
+            var cart = _context.Cart
+                .Include(c => c.Items)
+                    .ThenInclude(i => i.Game)
+                .FirstOrDefault(c => c.UserId == userId);
 
-            return View(cart);
+            // Garantir que Items nunca seja null
+            if (cart == null)
+            {
+                cart = new Cart
+                {
+                    UserId = userId,
+                    Items = new List<CartItem>() // Inicia Items como uma lista vazia
+                };
+            }
+
+            return View(cart); // Retorna a view com o carrinho do usuário
         }
-    }
 
+    }
 }

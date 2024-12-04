@@ -8,6 +8,7 @@
         public int GameId { get; set; }
         public Game Game { get; set; }
         public int Quantity { get; set; }
-        public decimal UnitPrice => Game.Price;
+        public decimal UnitPrice => Game?.Price ?? 0;
+
     }
 }
