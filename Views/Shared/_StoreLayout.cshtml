@@ -84,15 +84,15 @@
 
                     <div id="searchResults" class="mt-2" style="display: none;"></div>
 
-
-
                 </div>
                 <!-- Collapsible wrapper -->
                 <!-- Right elements -->
                 <div class="d-flex align-items-center">
-                    <!-- Shopping cart -->
-                    <a class="text-reset me-3" asp-area="" asp-controller="Cart" asp-action="Index">
-                        <i class="fas fa-shopping-cart"></i>
+                    <!-- Botão de Carrinho com imagem maior -->
+                    <a href="@Url.Action("Index", "Cart")" class="text-reset me-3">
+                        <button class="btn">
+                            <img src="~/shoppingcart.png" alt="Carrinho" style="width: 40px; height: auto;" />
+                        </button>
                     </a>
 
                     <!-- Notifications -->
@@ -154,8 +154,9 @@
             <!-- Container wrapper -->
         </nav>
         <!-- Navbar -->
-
     </header>
+
+
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
