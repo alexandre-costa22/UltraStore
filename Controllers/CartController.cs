@@ -25,7 +25,8 @@ namespace LvlUp.Controllers
 
             if (userId == null)
             {
-                return RedirectToAction("Login", "Account"); // Redireciona para a página de login, caso o usuário não esteja autenticado.
+                return Redirect("/Identity/Account/Login");
+
             }
 
             // Encontra o carrinho do usuário ou cria um novo
@@ -90,6 +91,73 @@ namespace LvlUp.Controllers
 
             return View(cart); // Retorna a view com o carrinho do usuário
         }
+
+        [HttpGet]
+        public async Task<IActionResult> RemoveFromCart(int cartItemId)
+        {
+            var userId = User.Identity.Name;
+
+            if (userId == null)
+            {
+                return Redirect("/Identity/Account/Login");
+            }
+
+            // Encontra o carrinho do usuário
+            var cart = await _context.Cart
+                .Include(c => c.Items)
+                .FirstOrDefaultAsync(c => c.UserId == userId);
+
+            if (cart == null)
+            {
+                // Se o carrinho não existir, redireciona para a página do carrinho
+                return RedirectToAction("Index");
+            }
+
+            // Encontra o item do carrinho com o cartItemId
+            var cartItem = cart.Items.FirstOrDefault(item => item.Id == cartItemId);
+
+            if (cartItem != null)
+            {
+                // Remove o item do carrinho
+                cart.Items.Remove(cartItem);
+                await _context.SaveChangesAsync();
+            }
+
+            // Redireciona para a página do carrinho após a remoção
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateQuantity(int cartItemId, int quantity)
+        {
+            var userId = User.Identity.Name;
+
+            if (userId == null)
+            {
+                return Redirect("/Identity/Account/Login");
+            }
+
+            var cart = await _context.Cart
+                .Include(c => c.Items)
+                .FirstOrDefaultAsync(c => c.UserId == userId);
+
+            if (cart == null)
+            {
+                return NotFound();
+            }
+
+            var cartItem = cart.Items.FirstOrDefault(item => item.Id == cartItemId);
+
+            if (cartItem != null)
+            {
+                // Atualiza a quantidade do item no carrinho
+                cartItem.Quantity = quantity;
+                await _context.SaveChangesAsync();
+            }
+
+            return Json(new { success = true });
+        }
+
 
     }
 }

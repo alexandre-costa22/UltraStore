@@ -24,9 +24,13 @@
         {
             <tr>
                 <td>@item.Game.Title</td>
-                <td>@item.UnitPrice.ToString("C")</td>
-                <td>@item.Quantity</td>
-                <td>R$ @(item.Quantity * item.UnitPrice)</td>
+                <td id="price-@item.Id">@item.UnitPrice.ToString("C")</td>
+                <td>
+                    <button class="btn btn-sm btn-outline-secondary decrease" data-itemid="@item.Id">-</button>
+                    <span id="quantity-@item.Id">@item.Quantity</span>
+                    <button class="btn btn-sm btn-outline-secondary increase" data-itemid="@item.Id">+</button>
+                </td>
+                <td id="subtotal-@item.Id">R$ @(item.Quantity * item.UnitPrice)</td>
                 <td>
                     <a asp-action="RemoveFromCart" asp-route-cartItemId="@item.Id" class="btn btn-danger">Remover</a>
                 </td>
@@ -34,5 +38,75 @@
         }
     </tbody>
 </table>
-<h3 style="color: orange;">Total: @Model.Total.ToString("C")</h3>
+<h3 id="total" style="color: orange;">Total: @Model.Total.ToString("C")</h3>
 <a asp-action="Checkout" class="btn btn-success">Finalizar Compra</a>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        // Botões de incremento
+        $(".increase").click(function () {
+            var itemId = $(this).data("itemid");
+            updateQuantity(itemId, 1);
+        });
+
+        // Botões de decremento
+        $(".decrease").click(function () {
+            var itemId = $(this).data("itemid");
+            updateQuantity(itemId, -1);
+        });
+
+        function updateQuantity(itemId, delta) {
+            // Atualiza a quantidade no front-end
+            var quantitySpan = $("#quantity-" + itemId);
+            var currentQuantity = parseInt(quantitySpan.text());
+            var newQuantity = currentQuantity + delta;
+
+            if (newQuantity < 1) return; // Impede que a quantidade seja negativa ou zero
+
+            quantitySpan.text(newQuantity);
+
+            // Extrai o preço unitário de forma correta
+            var unitPriceText = $("#price-" + itemId).text();
+            var unitPrice = parseFloat(unitPriceText.replace('R$', '').replace('.', '').replace(',', '.')); // Converte para número
+
+            // Atualiza o subtotal no front-end
+            var newSubtotal = newQuantity * unitPrice;
+            $("#subtotal-" + itemId).text("R$ " + newSubtotal.toFixed(2).replace('.', ','));
+
+            // Envia a requisição AJAX para atualizar no banco
+            $.ajax({
+                url: '@Url.Action("UpdateQuantity", "Cart")',
+                type: 'POST',
+                data: { cartItemId: itemId, quantity: newQuantity },
+                success: function (response) {
+                    // Atualiza o total no front-end
+                    updateTotal();
+                },
+                error: function () {
+                    alert("Erro ao atualizar a quantidade.");
+                }
+            });
+        }
+
+        function updateTotal() {
+            var total = 0;
+
+            // Percorre todos os subtotais e soma para obter o total
+            $("tbody tr").each(function () {
+                var subtotalText = $(this).find("td[id^='subtotal']").text();
+                var subtotal = parseFloat(subtotalText.replace('R$', '').replace('.', '').replace(',', '.')); // Converte para número
+                total += subtotal;
+            });
+
+            // Atualiza o total no front-end com formatação
+            $("#total").text("Total: " + formatCurrency(total));
+        }
+
+        // Função para formatar valores monetários com ponto como separador de milhar
+        function formatCurrency(amount) {
+            return "R$ " + amount.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+    });
+</script>
