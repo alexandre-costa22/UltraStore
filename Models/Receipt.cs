@@ -7,10 +7,6 @@ namespace LvlUp.Models
     {
         public int Id { get; set; }
 
-        [Display(Name = "Data da compra")]
-        [DataType(DataType.Date)]
-        public DateTime PurchaseDate { get; set; }
-
         [Required(ErrorMessage = "O CPF do cliente é obrigatório.")]
         [StringLength(11, ErrorMessage = "O CPF deve ter exatamente 11 caracteres.")]
         [RegularExpression(@"\d{11}", ErrorMessage = "O CPF deve conter apenas números.")]
