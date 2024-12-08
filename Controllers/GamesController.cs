@@ -134,7 +134,7 @@ namespace LvlUp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,ReleaseDate,Price,DeveloperId,PublisherId,FranchiseId,SoftwareId,Rating,IsMultiplayer,ImagePath")] Game game)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,ReleaseDate,Price,DeveloperId,PublisherId,FranchiseId,SoftwareId,Rating,IsMultiplayer")] Game game, IFormFile? imageFile)
         {
             if (id != game.Id)
             {
@@ -145,6 +145,23 @@ namespace LvlUp.Controllers
             {
                 try
                 {
+                    if (imageFile != null && imageFile.Length > 0)
+                    {
+                        var fileName = Path.GetRandomFileName() + Path.GetExtension(imageFile.FileName);
+
+                        var uploadPath = Path.Combine(_webHostEnvironment.WebRootPath, "images", "games");
+                        Directory.CreateDirectory(uploadPath);
+
+                        var filePath = Path.Combine(uploadPath, fileName);
+
+
+                        using (var stream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await imageFile.CopyToAsync(stream);
+                        }
+
+                        game.ImagePath = Path.Combine("images", "games", fileName).Replace("\\", "/");
+                    }
                     _context.Update(game);
                     await _context.SaveChangesAsync();
                 }
