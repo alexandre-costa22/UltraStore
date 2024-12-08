@@ -1,7 +1,10 @@
 ﻿body {
+    font-family: barlow,arial,sans-serif !important;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    background-color: #323232;
+    color: white
 }
 
 .footer {
@@ -9,7 +12,12 @@
 }
 
 .navbar {
-    height: 100px; 
+    height: 100px;
+    background-color: black !important;
+}
+
+a {
+    color: gray !important;
 }
 
 .navbar-brand img {
@@ -17,5 +25,9 @@
     width: auto !important;
     object-fit: contain;
     height: 100%;
+}
+
+footer {
+    background-color: black !important;
 }
 

@@ -39,8 +39,11 @@
                     <!-- Slide Content -->
                     <div class="game-card">
                         <a href="@Url.Action("GameInfo", "Store", new { id = game.Id })">
-                            <img src="@Url.Content($"~/{game.ImagePath}")" alt="@game.Title" class="game-image" />
-                            <h3 class="game-title">@game.Title</h3>
+                            <div class="game-image">
+                                <img src="@Url.Content($"~/{game.ImagePath}")" alt="@game.Title"/>
+                            </div>
+                            <b><h3 class="game-title">@game.Title</h3></b>
+                            <b><h4 class ="game-title">R$ @game.Price</h4></b>
                         </a>
                     </div>
                 </div>

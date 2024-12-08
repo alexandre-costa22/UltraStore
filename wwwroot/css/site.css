@@ -37,3 +37,7 @@ body {
 .fade-in {
     animation: fadeIn 2s ease-out; /* 2s é o tempo da animação, pode ser ajustado */
 }
+
+footer {
+    background-color: black !important;
+}
