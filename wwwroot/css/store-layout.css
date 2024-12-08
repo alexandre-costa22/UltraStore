@@ -1,0 +1,21 @@
+﻿body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.footer {
+    margin-top: auto;
+}
+
+.navbar {
+    height: 100px; 
+}
+
+.navbar-brand img {
+    max-height: 200px !important;
+    width: auto !important;
+    object-fit: contain;
+    height: 100%;
+}
+

@@ -7,33 +7,9 @@
     <link rel="icon" href="~/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <link href="~/css/store-layout.css" rel="stylesheet" />
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script> <!-- FontAwesome para os ícones -->
-
-    <style>
-        /* Garanta que o conteúdo ocupe toda a altura da tela */
-        body {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* Faz o footer ir para o final */
-        .footer {
-            margin-top: auto;
-        }
-
-        .navbar {
-            height: 100px; /* Defina a altura desejada para a navbar */
-        }
-
-        .navbar-brand img {
-            max-height: 200px !important;
-            width: auto !important;
-            object-fit: contain;
-            height: 100%;
-        }
-    </style>
-
+    @RenderSection("Styles", false)
 </head>
 <body>
     <header>

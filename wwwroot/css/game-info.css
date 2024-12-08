@@ -1,0 +1,14 @@
+﻿h1, h2, h3, h4 {
+    color: #FFA500; /* Cor Laranja */
+}
+
+.add-to-cart-button {
+    display: inline-block; /* Certifica-se de que só o conteúdo da imagem é clicável */
+}
+
+.add-to-cart-button img {
+    width: 300px; /* Define um tamanho fixo */
+    height: auto;
+    cursor: pointer; /* Adiciona o cursor de "mãozinha" sobre a imagem */
+}
+
