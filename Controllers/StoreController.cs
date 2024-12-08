@@ -14,18 +14,25 @@ namespace LvlUp.Controllers
         {
             _context = context;
         }
-        public IActionResult Index()
+        public IActionResult Index(string query)
         {
-            var games = _context.Game.ToList();
+            ViewData["query"] = query;
+
+            var games = string.IsNullOrEmpty(query)
+                ? _context.Game.ToList()
+                : _context.Game.Where(g => g.Title.Contains(query)).ToList();
+
             return View(games);
         }
+
 
         [HttpGet]
         public IActionResult SearchGames(string query)
         {
             if (string.IsNullOrEmpty(query))
             {
-                return Json(new { results = new List<Game>() });
+                var emptyList = new List<Game>();
+                return PartialView("_GameListPartial", emptyList);
             }
 
             var games = _context.Game
@@ -33,8 +40,9 @@ namespace LvlUp.Controllers
                 .Take(5)
                 .ToList();
 
-            return Json(new { results = games });
+            return PartialView("_GameListPartial", games);
         }
+
 
         public async Task<IActionResult> GameInfo(int id)
         {
