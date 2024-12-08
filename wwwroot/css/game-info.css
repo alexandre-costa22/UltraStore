@@ -7,7 +7,7 @@
 }
 
 .add-to-cart-button img {
-    width: 300px; /* Define um tamanho fixo */
+    width: 200px; /* Define um tamanho fixo */
     height: auto;
     cursor: pointer; /* Adiciona o cursor de "mãozinha" sobre a imagem */
 }
