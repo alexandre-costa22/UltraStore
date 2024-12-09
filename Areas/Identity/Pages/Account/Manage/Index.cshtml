@@ -2,6 +2,9 @@
 @model IndexModel
 @{
     ViewData["Title"] = "Perfil";
+
+
+
     ViewData["ActivePage"] = ManageNavPages.Index;
 }
 
@@ -9,17 +12,36 @@
 <partial name="_StatusMessage" for="StatusMessage" />
 <div class="row">
     <div class="col-md-6">
-        <form id="profile-form" method="post">
+        <form id="profile-form" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <!-- Campo de username -->
             <div class="form-floating">
                 <input asp-for="Username" class="form-control" disabled />
                 <label asp-for="Username" class="form-label"></label>
             </div>
+
+            <!-- Campo de número de telefone -->
             <div class="form-floating">
                 <input asp-for="Input.PhoneNumber" class="form-control" />
                 <label asp-for="Input.PhoneNumber" class="form-label"></label>
                 <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
             </div>
+
+            <!-- Campo de foto de perfil -->
+            <div class="mb-3">
+                <label for="Input_ProfilePicture" class="form-label">Foto de Perfil</label>
+                <input type="file" class="form-control" id="Input_ProfilePicture" name="Input.ProfilePicture" accept="image/*" />
+                <span asp-validation-for="Input.ProfilePicture" class="text-danger"></span>
+
+                @if (!string.IsNullOrEmpty(Model.Input.ProfilePictureUrl))
+
+                {
+                    <img src="@Model.Input.ProfilePictureUrl" alt="Profile Picture" style="max-width: 200px; max-height: 200px; margin-top: 10px;" />
+                }
+            </div>
+
+            <!-- Botão de salvar -->
             <button id="update-profile-button" type="submit" class="btn btn-dark">Salvar</button>
         </form>
     </div>

@@ -52,27 +52,32 @@ namespace LvlUp.Areas.Identity.Pages.Account.Manage
         /// </summary>
         public class InputModel
         {
-            /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
-            /// </summary>
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+
+            [Display(Name = "Profile Picture")]
+            public IFormFile ProfilePicture { get; set; }
+
+            public string ProfilePictureUrl { get; set; }
         }
+
 
         private async Task LoadAsync(ApplicationUser user)
         {
             var userName = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
+            var profilePictureUrl = user.ProfilePictureUrl; 
 
             Username = userName;
 
             Input = new InputModel
             {
-                PhoneNumber = phoneNumber
+                PhoneNumber = phoneNumber,
+                ProfilePictureUrl = profilePictureUrl // Carregar a URL da imagem
             };
         }
+
 
         public async Task<IActionResult> OnGetAsync()
         {
@@ -91,7 +96,7 @@ namespace LvlUp.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return NotFound($"Não foi possível carregar o usuário com ID '{_userManager.GetUserId(User)}'.");
             }
 
             if (!ModelState.IsValid)
@@ -106,14 +111,35 @@ namespace LvlUp.Areas.Identity.Pages.Account.Manage
                 var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
                 if (!setPhoneResult.Succeeded)
                 {
-                    StatusMessage = "Unexpected error when trying to set phone number.";
+                    StatusMessage = "Erro inesperado ao tentar definir o número de telefone.";
                     return RedirectToPage();
                 }
             }
 
+            if (Input.ProfilePicture != null)
+            {
+                var directoryPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", "profile_pics");
+                if (!Directory.Exists(directoryPath))
+                {
+                    Directory.CreateDirectory(directoryPath);
+                }
+
+                var filePath = Path.Combine(directoryPath, Input.ProfilePicture.FileName);
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await Input.ProfilePicture.CopyToAsync(stream);
+                }
+
+                user.ProfilePictureUrl = "/images/profile_pics/" + Input.ProfilePicture.FileName;
+            }
+
+            await _userManager.UpdateAsync(user);
             await _signInManager.RefreshSignInAsync(user);
-            StatusMessage = "Your profile has been updated";
+
+            StatusMessage = "Seu perfil foi atualizado";
             return RedirectToPage();
         }
+
+
     }
 }

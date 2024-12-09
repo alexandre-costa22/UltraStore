@@ -12,5 +12,7 @@ namespace LvlUp.Models
 
         [MaxLength(15, ErrorMessage = "O telefone deve conter no máximo 15 números.")]
         public string PhoneNumber { get; set; }
+
+        public string ProfilePictureUrl { get; set; }
     }
 }
