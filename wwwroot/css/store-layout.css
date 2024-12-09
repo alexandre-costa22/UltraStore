@@ -20,6 +20,11 @@ a {
     color: gray !important;
 }
 
+.thead{
+    background-color: black;
+    color: #FFA500
+}
+
 .navbar-brand img {
     max-height: 200px !important;
     width: auto !important;

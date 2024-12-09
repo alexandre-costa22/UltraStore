@@ -13,25 +13,26 @@
 <table class="table">
     <thead>
         <tr>
-            <th>PRODUTO</th>
-            <th>PREÇO</th>
-            <th>QUANTIDADE</th>
-            <th>SUBTOTAL</th>
+            <th style="background-color: black; color: orange; border-style: none !important">PRODUTO</th>
+            <th style="background-color: black; color: orange; border-style: none !important">PREÇO</th>
+            <th style="background-color: black; color: orange; border-style: none !important">QUANTIDADE</th>
+            <th style="background-color: black; color: orange; border-style: none !important">SUBTOTAL</th>
+            <th style="background-color: black; color: orange; border-style: none !important"></th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model.Items)
         {
             <tr>
-                <td>@item.Game.Title</td>
-                <td id="price-@item.Id">@item.UnitPrice.ToString("C")</td>
-                <td>
+                <td style="background-color: gray; border-style: none !important">@item.Game.Title</td>
+                <td style="background-color: gray; border-style: none !important" id="price-@item.Id">@item.UnitPrice.ToString("C")</td>
+                <td style="background-color: gray; border-style: none !important">
                     <button class="btn btn-sm btn-outline-secondary decrease" data-itemid="@item.Id">-</button>
                     <span id="quantity-@item.Id">@item.Quantity</span>
                     <button class="btn btn-sm btn-outline-secondary increase" data-itemid="@item.Id">+</button>
                 </td>
-                <td id="subtotal-@item.Id">R$ @(item.Quantity * item.UnitPrice)</td>
-                <td>
+                <td style="background-color: gray; border-style: none !important" id="subtotal-@item.Id">R$ @(item.Quantity * item.UnitPrice)</td>
+                <td style="background-color: gray; border-style: none !important">
                     <a asp-action="RemoveFromCart" asp-route-cartItemId="@item.Id" class="btn btn-danger">Remover</a>
                 </td>
             </tr>
