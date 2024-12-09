@@ -30,6 +30,29 @@ namespace LvlUp.Controllers
             return View();
         }
 
+        public IActionResult Contact()
+        {
+            return View();
+        }
+
+        public IActionResult Privacy()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Contact(string name, string email, string message)
+        {
+            if (ModelState.IsValid)
+            {
+                // Lógica para processar o formulário (enviar email, salvar em banco de dados, etc.)
+                TempData["Message"] = "Sua mensagem foi enviada com sucesso!";
+                return RedirectToAction("Contact");
+            }
+
+            return View();
+        }
+
 
         [HttpGet]
         public IActionResult SearchGames(string query)
