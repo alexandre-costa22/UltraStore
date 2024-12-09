@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Página não encontrada";
+    ViewData["Title"] = "Sonic não conseguiu achar";
 }
 
 @{
@@ -18,10 +18,12 @@
 </head>
 
 <body>
-    <div class="container error-container">
+    <div class="container error-container text-center">
+        <!-- A imagem ficou maior, mas de forma equilibrada -->
+        <img src="~/confused_sonic.jpg" alt="Sonic Confuso" class="img-fluid" style="width: 50%; max-width: none;" />
         <div class="error-code">404</div>
-        <div class="error-message">Página não encontrada</div>
-        <p>Desculpe, a página que você está procurando não existe.</p>
+        <div class="error-message">Parece que o Sonic não conseguiu achar o que você estava procurando...</div>
+        <p>Mas não se preocupe, ele corre rápido e vai continuar procurando!</p>
         <a href="/" class="back-link">Voltar pra página principal</a>
     </div>
 </body>
