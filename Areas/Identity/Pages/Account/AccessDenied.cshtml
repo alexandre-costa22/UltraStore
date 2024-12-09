@@ -1,12 +1,10 @@
-﻿@{
-    ViewData["Title"] = "Acesso Negado";
+﻿@page
+@model AccessDeniedModel
+@{
+    ViewData["Title"] = "Access denied";
 }
 
-<div style="text-align: center; margin-top: 50px;">
-    <h1 style="color: red;">Acesso Negado</h1>
-    <p>Você não tem permissão para acessar este recurso.</p>
-    <img src="~/acess-denied.png" alt="Acesso Negado" style="width: 250px; display: block; margin: 0 auto;" />
-    <a href="/" style="color: red; text-decoration: none; font-size: 18px; display: inline-block; margin-top: 20px; padding: 10px 20px; border: 2px solid red; border-radius: 5px; text-align: center;">
-        Voltar
-    </a>
-</div>
+<header>
+    <h1 class="text-danger">@ViewData["Title"]</h1>
+    <p class="text-danger">You do not have access to this resource.</p>
+</header>

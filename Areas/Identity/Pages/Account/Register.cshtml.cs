@@ -12,13 +12,13 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using LvlUp.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
-using LvlUp.Models;
 
 namespace LvlUp.Areas.Identity.Pages.Account
 {
@@ -75,13 +75,6 @@ namespace LvlUp.Areas.Identity.Pages.Account
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
-            [MaxLength(50, ErrorMessage = "O nome deve conter no máximo 50 caracteres.")]
-            [Required]
-            public string FullName { get; set; }
-
-            [MaxLength(15, ErrorMessage = "O telefone deve conter no máximo 15 números.")]
-            public string PhoneNumber { get; set; }
-
             [Required]
             [EmailAddress]
             [Display(Name = "Email")]
@@ -121,8 +114,6 @@ namespace LvlUp.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
-                user.FullName = Input.FullName;
-                user.PhoneNumber = Input.PhoneNumber;
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
