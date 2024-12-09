@@ -49,12 +49,16 @@
         <h4 style="color: white;">Aplicativo autenticador</h4>
         @if (!Model.HasAuthenticator)
         {
-            <a id="enable-authenticator" asp-page="./EnableAuthenticator" class="btn btn-primary">Adicionar aplicativo autenticador</a>
+        <a id="enable-authenticator" asp-page="./EnableAuthenticator" class="btn btn-dark" style="color: white !important;">
+            Adicionar aplicativo autenticador
+        </a>
+
+
         }
         else
         {
-            <a id="enable-authenticator" asp-page="./EnableAuthenticator" class="btn btn-primary">Configurar aplicativo autenticador</a>
-            <a id="reset-authenticator" asp-page="./ResetAuthenticator" class="btn btn-primary">Redefinir aplicativo autenticador</a>
+            <a id="enable-authenticator" asp-page="./EnableAuthenticator" class="btn btn-dark">Configurar aplicativo autenticador</a>
+            <a id="reset-authenticator" asp-page="./ResetAuthenticator" class="btn btn-dark">Redefinir aplicativo autenticador</a>
         }
     }
     else
