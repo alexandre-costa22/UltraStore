@@ -1,15 +1,15 @@
 ﻿@page
 @model RegisterModel
 @{
-    ViewData["Title"] = "Registrar";
+    ViewData["Title"] = "Cadastrar-se";
 }
 
-<h1>@ViewData["Title"]</h1>
+<h1 style="color: #FFA500;">@ViewData["Title"]</h1>
 
 <div class="row">
     <div class="col-md-4">
         <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <h2>Criar uma nova conta.</h2>
+            <h2 style="color: white;">Criar uma nova conta.</h2>
             <hr />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-floating">
@@ -32,17 +32,14 @@
     </div>
     <div class="col-md-6 col-md-offset-2">
         <section>
-            <h3>Use outro serviço para registrar.</h3>
+            <h3 style="color: #FFA500;">Use outro serviço para registrar.</h3>
             <hr />
             @{
                 if ((Model.ExternalLogins?.Count ?? 0) == 0)
                 {
                     <div>
                         <p>
-                            Não há serviços de autenticação externos configurados. Veja este <a href="https://go.microsoft.com/fwlink/?LinkID=532715">
-                                artigo
-                                sobre como configurar este aplicativo ASP.NET para permitir login por meio de serviços externos
-                            </a>.
+                            Não há serviços de autenticação externos configurados.
                         </p>
                     </div>
                 }
@@ -52,6 +49,7 @@
                         <div>
                             <p>
                                 @foreach (var provider in Model.ExternalLogins!)
+
                                 {
                                     <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Faça login usando sua conta @provider.DisplayName">@provider.DisplayName</button>
                                 }
