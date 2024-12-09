@@ -25,6 +25,11 @@ namespace LvlUp.Controllers
             return View(games);
         }
 
+        public IActionResult AboutUs()
+        {
+            return View();
+        }
+
 
         [HttpGet]
         public IActionResult SearchGames(string query)
