@@ -24,20 +24,19 @@ namespace LvlUp.Areas.Identity.Pages.Account
             _logger = logger;
         }
 
-        public async Task<IActionResult> OnPost(string returnUrl = null)
+        // Alteração: Mudei o OnPost() para OnGet(), permitindo o logout direto via GET
+        public async Task<IActionResult> OnGet(string? returnUrl = null)
         {
             await _signInManager.SignOutAsync();
             _logger.LogInformation("User logged out.");
+
             if (returnUrl != null)
             {
-                return LocalRedirect(returnUrl);
+                return LocalRedirect(returnUrl);  // Redireciona para o URL de retorno
             }
-            else
-            {
-                // This needs to be a redirect so that the browser performs a new
-                // request and the identity for the user gets updated.
-                return RedirectToPage();
-            }
+
+            return RedirectToPage("/Index");  // Redireciona para a página inicial
         }
     }
+
 }

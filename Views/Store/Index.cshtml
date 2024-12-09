@@ -24,7 +24,7 @@
 <div class="search-container text-center mt-4">
     <form asp-action="Index" method="get" class="d-inline-block w-50">
         <input type="text" name="query" class="form-control" placeholder="Digite o título do jogo..." value="@ViewData["query"]" />
-        <button type="submit" class="btn btn-primary mt-2">Buscar</button>
+        <button type="submit" class="btn btn-dark mt-2">Buscar</button>
     </form>
 </div>
 
@@ -52,7 +52,7 @@
         else
         {
             <div class="swiper-slide">
-                <p class="text-center text-muted">Nenhum jogo encontrado com a busca.</p>
+                <p class="text-center" style="color: #D3D3D3;">Nenhum jogo encontrado com a busca.</p>
             </div>
         }
     </div>
