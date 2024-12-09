@@ -25,10 +25,6 @@ namespace LvlUp.Models
         [Display(Name = "Vendedor")]
         public Seller? Seller { get; set; }
 
-        [Required(ErrorMessage = "Os jogos são obrigatórios.")]
-        [Display(Name = "Jogos")]
-        public ICollection<Game>? Games { get; set; }
-
         [Range(0.01, double.MaxValue, ErrorMessage = "O preço total deve ser maior que zero.")]
         [Display(Name = "Preço total")]
         public decimal TotalPrice { get; set; }

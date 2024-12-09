@@ -54,6 +54,7 @@ namespace LvlUp.Controllers
                 CreatedAt = DateTime.Now
             };
 
+            ViewData["Games"] = new SelectList(_context.Client, "Id", "Title");
             ViewData["ClientId"] = new SelectList(_context.Client, "Id", "Email");
             ViewData["SellerId"] = new SelectList(_context.Seller, "Id", "Email");
             return View(receipt);
@@ -65,7 +66,7 @@ namespace LvlUp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Cpf,ClientId,SellerId,TotalPrice")] Receipt receipt)
+        public async Task<IActionResult> Create([Bind("Id,Cpf,ClientId,SellerId,TotalPrice,Games")] Receipt receipt)
         {
             if (ModelState.IsValid)
             {
@@ -74,6 +75,7 @@ namespace LvlUp.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["Games"] = new SelectList(_context.Client, "Id", "Title");
             ViewData["ClientId"] = new SelectList(_context.Client, "Id", "Email", receipt.ClientId);
             ViewData["SellerId"] = new SelectList(_context.Seller, "Id", "Email", receipt.SellerId);
             return View(receipt);
@@ -92,6 +94,7 @@ namespace LvlUp.Controllers
             {
                 return NotFound();
             }
+
             ViewData["ClientId"] = new SelectList(_context.Client, "Id", "Email", receipt.ClientId);
             ViewData["SellerId"] = new SelectList(_context.Seller, "Id", "Email", receipt.SellerId);
             return View(receipt);
@@ -102,7 +105,7 @@ namespace LvlUp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Cpf,ClientId,SellerId,TotalPrice")] Receipt receipt)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Cpf,ClientId,SellerId,TotalPrice, Games")] Receipt receipt)
         {
             if (id != receipt.Id)
             {
@@ -139,6 +142,8 @@ namespace LvlUp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+
+
             ViewData["ClientId"] = new SelectList(_context.Client, "Id", "Email", receipt.ClientId);
             ViewData["SellerId"] = new SelectList(_context.Seller, "Id", "Email", receipt.SellerId);
             return View(receipt);

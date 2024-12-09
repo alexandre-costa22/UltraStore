@@ -9,12 +9,16 @@
   <ItemGroup>
     <Compile Remove="ControllersBackup\**" />
     <Compile Remove="NovaPasta\**" />
+    <Compile Remove="wwwroot\lib\**" />
     <Content Remove="ControllersBackup\**" />
     <Content Remove="NovaPasta\**" />
+    <Content Remove="wwwroot\lib\**" />
     <EmbeddedResource Remove="ControllersBackup\**" />
     <EmbeddedResource Remove="NovaPasta\**" />
+    <EmbeddedResource Remove="wwwroot\lib\**" />
     <None Remove="ControllersBackup\**" />
     <None Remove="NovaPasta\**" />
+    <None Remove="wwwroot\lib\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -42,7 +46,6 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\images\games\" />
-    <Folder Include="wwwroot\lib\" />
   </ItemGroup>
 
 </Project>
